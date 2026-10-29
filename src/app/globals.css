@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Palette d'excellence optique (triplets RGB, utilisables avec l'opacité Tailwind) */
+  --nuit: 14 27 51; /* Bleu nuit profond */
+  --nuit-doux: 28 46 82;
+  --ivoire: 247 245 240; /* Albâtre / Blanc cassé chaud */
+  --ivoire-fonce: 238 234 225;
+  --sauge: 132 160 144; /* Vert sauge doux */
+  --sauge-fonce: 62 98 82;
+  --sauge-pale: 228 236 230;
+  --champagne: 201 169 110; /* Or champagne subtil */
+  --champagne-fonce: 138 107 52;
+  --gris: 107 114 128;
+  --gris-fonce: 71 80 95;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: rgb(var(--ivoire));
+  color: rgb(var(--nuit));
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--champagne));
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+::selection {
+  background: rgb(var(--champagne) / 0.35);
+  color: rgb(var(--nuit));
+}
+
+/* Moment signature : la mise au point du titre (flou -> net) */
+@keyframes mise-au-point {
+  from {
+    filter: blur(12px);
+    opacity: 0.2;
+    transform: scale(1.015);
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cercle-focus {
+  from {
+    transform: scale(1.08);
+    opacity: 0.3;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.04); opacity: 0.85; }
+}
+
+.focus-in {
+  animation: mise-au-point 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.focus-in-delay {
+  animation: mise-au-point 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lens-in {
+  animation: cercle-focus 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+}
+
+/* Classes utilitaires pour le design system premium */
+.glass-panel-dark {
+  background: rgba(14, 27, 51, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(14, 27, 51, 0.08);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #c9a96e 0%, #f4e8cc 50%, #c9a96e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(132, 160, 144, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(132, 160, 144, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(132, 160, 144, 0);
+  }
+}
+
+.pulse-live-ring {
+  animation: pulse-ring 2.4s infinite cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.float-slow {
+  animation: subtle-float 6s ease-in-out infinite;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .focus-in,
+  .focus-in-delay,
+  .lens-in {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Espacement sécurisé pour les barres tactiles et le bouton flottant */
+.safe-bottom {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}
