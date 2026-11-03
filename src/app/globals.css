@@ -12,23 +12,76 @@
   --sauge-fonce: 62 98 82;
   --sauge-pale: 228 236 230;
   --champagne: 201 169 110; /* Or champagne subtil */
-  --champagne-fonce: 138 107 52;
+  --champagne-fonce: 122 92 40; /* Contraste renforcé WCAG AA (> 5.8:1 sur Ivoire/Blanc) */
   --gris: 107 114 128;
   --gris-fonce: 71 80 95;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 6rem;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  background-color: rgb(var(--nuit));
 }
 
 body {
-  background: rgb(var(--ivoire));
+  min-height: 100svh;
+  background-color: rgb(var(--ivoire));
+  background-image:
+    radial-gradient(circle at 15% 10%, rgb(var(--champagne) / 0.065), transparent 42%),
+    radial-gradient(circle at 85% 45%, rgb(var(--sauge) / 0.075), transparent 46%);
   color: rgb(var(--nuit));
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+/* Typographie fluide intelligente (320px Mobile -> 1920px+ Desktop) */
+.text-fluid-hero {
+  font-size: clamp(2rem, 3.8vw + 0.9rem, 3.85rem);
+  line-height: 1.07;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.text-fluid-h2 {
+  font-size: clamp(1.75rem, 2.8vw + 0.75rem, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.text-fluid-h3 {
+  font-size: clamp(1.25rem, 1.6vw + 0.65rem, 1.85rem);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.text-fluid-lead {
+  font-size: clamp(0.94rem, 0.55vw + 0.8rem, 1.125rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+@media (display-mode: standalone) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  input,
+  textarea,
+  p,
+  h1,
+  h2,
+  h3,
+  span {
+    user-select: text;
+    -webkit-user-select: text;
+  }
 }
 
 :focus-visible {
@@ -42,24 +95,48 @@ body {
   color: rgb(var(--nuit));
 }
 
-/* Moment signature : la mise au point du titre (flou -> net) */
+/* Trame d'arrière-plan subtile évoquant le papier millimétré d'un laboratoire d'optique */
+.bg-optical-grid {
+  background-image:
+    linear-gradient(to right, rgb(var(--nuit) / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--nuit) / 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-optical-grid-dark {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Masquage propre des barres de défilement horizontales sur les filtres et suggestions mobiles */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Moment signature : la mise au point du titre (optimisée LCP & confort rétinien) */
 @keyframes mise-au-point {
   from {
-    filter: blur(12px);
-    opacity: 0.2;
-    transform: scale(1.015);
+    filter: blur(4px);
+    opacity: 0.72;
+    transform: translateY(4px) scale(1.005);
   }
   to {
     filter: blur(0);
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes cercle-focus {
   from {
-    transform: scale(1.08);
-    opacity: 0.3;
+    transform: scale(1.06);
+    opacity: 0.4;
   }
   to {
     transform: scale(1);
@@ -72,38 +149,180 @@ body {
   50% { transform: scale(1.04); opacity: 0.85; }
 }
 
+@keyframes optical-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes optical-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .focus-in {
-  animation: mise-au-point 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: mise-au-point 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .focus-in-delay {
-  animation: mise-au-point 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: mise-au-point 0.65s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .lens-in {
-  animation: cercle-focus 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: cercle-focus 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
   transform-origin: center;
 }
 
-/* Classes utilitaires pour le design system premium */
+/* Transitions fluides pour les onglets, étapes du bilan visuel et panneaux dynamiques */
+.animate-in.fade-in {
+  animation: optical-fade-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-in.fade-in.slide-in-from-bottom-2 {
+  animation: optical-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Séparateur ménisque optique (filet spéculaire entre sections sombres et claires) */
+.optical-meniscus-divider {
+  position: relative;
+}
+
+.optical-meniscus-divider::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(var(--sauge) / 0.28) 25%,
+    rgb(var(--champagne) / 0.65) 50%,
+    rgb(var(--sauge) / 0.28) 75%,
+    transparent 100%
+  );
+}
+
+.optical-meniscus-divider::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(var(--sauge) / 0.25) 25%,
+    rgb(var(--champagne) / 0.55) 50%,
+    rgb(var(--sauge) / 0.25) 75%,
+    transparent 100%
+  );
+}
+
+/* Classes utilitaires pour le design system premium (biseau de verre optique) */
 .glass-panel-dark {
-  background: rgba(14, 27, 51, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(14, 27, 51, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
 }
 
 .glass-panel-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(14, 27, 51, 0.08);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Conteneurs d'icônes joaillerie / optique */
+.icon-badge-gold {
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.24) 0%, rgba(201, 169, 110, 0.06) 100%);
+  border: 1px solid rgba(201, 169, 110, 0.38);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 6px 16px -4px rgba(201, 169, 110, 0.18);
+}
+
+.icon-badge-sage {
+  background: linear-gradient(135deg, rgba(132, 160, 144, 0.26) 0%, rgba(228, 236, 230, 0.5) 100%);
+  border: 1px solid rgba(62, 98, 82, 0.22);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.6), 0 6px 16px -4px rgba(62, 98, 82, 0.12);
 }
 
 .text-gold-gradient {
   background: linear-gradient(135deg, #c9a96e 0%, #f4e8cc 50%, #c9a96e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Halo et reflets optiques de précision (effet verre biseauté & antireflet au survol) */
+.optical-card-hover {
+  position: relative;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.optical-card-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* Reflet antireflet multicouche discret au survol des cartes d'équipement */
+.optical-lens-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.optical-lens-sheen::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 45%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 169, 110, 0.08),
+    rgba(132, 160, 144, 0.08),
+    transparent
+  );
+  transform: rotate(25deg) translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.optical-lens-sheen:hover::after {
+  transform: rotate(25deg) translateX(380%);
+}
+
+@keyframes optical-scan {
+  0%, 100% {
+    transform: translateY(-8%);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(8%);
+    opacity: 0.55;
+  }
+}
+
+.animate-optical-scan {
+  animation: optical-scan 5s ease-in-out infinite;
 }
 
 @keyframes pulse-ring {
@@ -134,19 +353,28 @@ body {
   animation: subtle-float 6s ease-in-out infinite;
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .focus-in,
   .focus-in-delay,
-  .lens-in {
-    animation: none;
+  .lens-in,
+  .float-slow,
+  .pulse-live-ring,
+  .animate-optical-scan,
+  .animate-in.fade-in,
+  .animate-in.fade-in.slide-in-from-bottom-2 {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
   *,
   *::before,
   *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

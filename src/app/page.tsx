@@ -8,6 +8,7 @@ import { GlassTech } from "@/components/sections/GlassTech";
 import { Hero } from "@/components/sections/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Insurance } from "@/components/sections/Insurance";
+import { OpticalDiagnostic } from "@/components/sections/OpticalDiagnostic";
 import { Services } from "@/components/sections/Services";
 import { Why } from "@/components/sections/Why";
 import { faqList, schedule, site } from "@/config/site";
@@ -21,7 +22,7 @@ const jsonLd = {
     {
       "@type": "Optician",
       "@id": `${site.url}/#optician`,
-      name: `${site.name}, opticienne à Douala`,
+      name: `${site.name}, opticienne-lunetière à Douala`,
       description: site.description,
       url: site.url,
       telephone: site.phoneE164,
@@ -43,7 +44,7 @@ const jsonLd = {
       employee: {
         "@type": "Person",
         name: site.name,
-        jobTitle: "Opticienne Diplômée",
+        jobTitle: "Opticienne-Lunetière",
       },
       areaServed: [
         {
@@ -82,11 +83,12 @@ export default function HomePage() {
         }}
       />
       <Hero />
-      <About />
-      <Services />
-      <FaceShapeAdvisor />
+      <OpticalDiagnostic />
       <Gallery />
       <GlassTech />
+      <FaceShapeAdvisor />
+      <Services />
+      <About />
       <Why />
       <HowItWorks />
       <Insurance />

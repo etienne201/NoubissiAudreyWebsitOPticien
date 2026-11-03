@@ -10,6 +10,7 @@ import {
   Sparkles,
   Info,
   ExternalLink,
+  PencilLine,
 } from "lucide-react";
 import { site, messages as siteMessages } from "@/config/site";
 import { chatbotEngine, INITIAL_QUICK_REPLIES, type ChatMessage } from "@/lib/chatbot-engine";
@@ -20,9 +21,16 @@ import { QuickReplies } from "./QuickReplies";
 interface ChatWindowProps {
   isOpen: boolean;
   onClose: () => void;
+  externalPrompt?: string | null;
+  onExternalPromptConsumed?: () => void;
 }
 
-export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
+export function ChatWindow({
+  isOpen,
+  onClose,
+  externalPrompt,
+  onExternalPromptConsumed,
+}: ChatWindowProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +65,15 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       }, 100);
     }
   }, [isOpen]);
+
+  // Traitement d'un message contextuel déclenché depuis une section de la page
+  useEffect(() => {
+    if (isOpen && externalPrompt && !isLoading && messages.length > 0) {
+      handleSendMessage(externalPrompt);
+      onExternalPromptConsumed?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, externalPrompt, messages.length]);
 
   // Défilement automatique fluide respectant la lecture de l'utilisateur
   useEffect(() => {
@@ -98,6 +115,18 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
     inputRef.current?.focus();
   };
 
+  /** Permet à l'utilisateur de modifier/corriger sa dernière réponse */
+  const handleEditLastUserMessage = () => {
+    if (isLoading || messages.length < 2) return;
+    const lastUserIdx = [...messages].map((m) => m.role).lastIndexOf("user");
+    if (lastUserIdx === -1) return;
+
+    const lastUserText = messages[lastUserIdx].content;
+    setMessages((prev) => prev.slice(0, lastUserIdx));
+    setInputValue(lastUserText);
+    inputRef.current?.focus();
+  };
+
   const handleSendMessage = async (userText: string) => {
     const textToSend = userText.trim();
     if (!textToSend || isLoading) return;
@@ -109,7 +138,8 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       timestamp: Date.now(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedHistory = [...messages, userMessage];
+    setMessages(updatedHistory);
     setInputValue("");
     setIsLoading(true);
 
@@ -120,7 +150,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: textToSend,
-          history: [...messages, userMessage].map((m) => ({ role: m.role, content: m.content })),
+          history: updatedHistory.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
 
@@ -135,6 +165,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         content: data.text,
         timestamp: Date.now(),
         category: data.category,
+        quickReplies: data.quickReplies,
         whatsappCta: data.whatsappCta,
         isEmergency: data.isEmergency,
       };
@@ -144,7 +175,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       // Fallback local contextuel instantané avec l'historique
       const localResult = chatbotEngine.process(
         textToSend,
-        [...messages, userMessage].map((m) => ({ role: m.role, content: m.content }))
+        updatedHistory.map((m) => ({ role: m.role, content: m.content }))
       );
       const botMessage: ChatMessage = {
         id: `bot-fallback-${Date.now()}`,
@@ -152,6 +183,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         content: localResult.text,
         timestamp: Date.now(),
         category: localResult.category,
+        quickReplies: localResult.quickReplies,
         whatsappCta: localResult.whatsappCta,
         isEmergency: localResult.isEmergency,
       };
@@ -169,6 +201,15 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
 
   if (!isOpen) return null;
 
+  const lastMessage = messages[messages.length - 1];
+  const activeQuickReplies =
+    messages.length <= 1
+      ? INITIAL_QUICK_REPLIES
+      : lastMessage?.role === "assistant" && lastMessage.quickReplies
+      ? lastMessage.quickReplies
+      : [];
+  const hasUserSentMessage = messages.some((m) => m.role === "user");
+
   return (
     <div
       id="chatbot-window"
@@ -176,10 +217,15 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       role="dialog"
       aria-label="Assistant d'optique Audrey Noubissi"
       aria-modal="true"
-      className="fixed inset-x-0 bottom-0 z-50 flex h-[92vh] max-h-[720px] flex-col overflow-hidden rounded-t-3xl border border-champagne/30 bg-ivoire shadow-2xl shadow-nuit/40 backdrop-blur-md transition-all duration-300 md:inset-auto md:bottom-24 md:right-6 md:h-[620px] md:w-[410px] md:rounded-3xl"
+      className="fixed inset-x-0 bottom-0 z-50 flex h-[90dvh] max-h-[720px] flex-col overflow-hidden rounded-t-3xl border border-champagne/30 bg-ivoire shadow-2xl shadow-nuit/40 backdrop-blur-md transition-all duration-300 md:inset-auto md:bottom-24 md:right-6 md:h-[620px] md:w-[410px] md:rounded-3xl"
     >
+      {/* Poignée tactile type application mobile native */}
+      <div className="bg-nuit pt-2 md:hidden" aria-hidden="true">
+        <div className="mx-auto h-1.5 w-12 rounded-full bg-white/25" />
+      </div>
+
       {/* Barre d'en-tête premium */}
-      <header className="relative flex shrink-0 items-center justify-between border-b border-nuit/10 bg-nuit px-4 py-3.5 text-ivoire">
+      <header className="relative flex shrink-0 items-center justify-between border-b border-nuit/10 bg-nuit px-4 py-3 text-ivoire">
         <div className="flex items-center gap-3">
           {/* Avatar avec indicateur de présence */}
           <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-champagne">
@@ -202,18 +248,29 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
                 Audrey Noubissi
               </h2>
               <span className="rounded-full bg-champagne/20 px-1.5 py-0.5 text-[10px] font-medium text-champagne">
-                Opticienne
+                Opticienne-Lunetière
               </span>
             </div>
             <p className="flex items-center gap-1 text-[11px] text-ivoire/75">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Conseils personnalisés • Douala
+              Conseil optique personnalisé • Douala
             </p>
           </div>
         </div>
 
         {/* Boutons d'action en-tête */}
         <div className="flex items-center gap-1 text-ivoire/80">
+          {hasUserSentMessage && (
+            <button
+              type="button"
+              onClick={handleEditLastUserMessage}
+              title="Corriger ma dernière réponse"
+              aria-label="Corriger ma dernière réponse"
+              className="rounded-full p-1.5 transition-colors hover:bg-white/10 hover:text-ivoire focus-visible:ring-2 focus-visible:ring-champagne"
+            >
+              <PencilLine size={15} />
+            </button>
+          )}
           <button
             type="button"
             onClick={handleResetConversation}
@@ -239,7 +296,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
       <div className="flex items-center gap-2 border-b border-nuit/5 bg-sauge-pale/70 px-3.5 py-2 text-[11px] text-gris-fonce">
         <Info size={14} className="shrink-0 text-sauge-fonce" aria-hidden="true" />
         <span className="leading-tight">
-          Conseils optiques bienveillants. Ne remplace pas un examen médical d&apos;ophtalmologie.
+          Conseils d&apos;opticienne-lunetière. Ne remplace pas l&apos;examen médical d&apos;un ophtalmologiste.
         </span>
       </div>
 
@@ -259,14 +316,16 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
           />
         ))}
 
-        {/* Suggestions initiales légères et facultatives au tout début uniquement */}
-        {messages.length <= 1 && (
+        {/* Suggestions contextuelles dynamiques */}
+        {!isLoading && activeQuickReplies.length > 0 && (
           <div className="pt-1 pb-2">
-            <p className="mb-2 text-[11px] font-medium text-gris">
-              Suggestions pour démarrer (ou écrivez librement votre question ci-dessous) :
+            <p className="mb-1.5 text-[11px] font-medium text-gris">
+              {messages.length <= 1
+                ? "Suggestions pour démarrer (ou écrivez librement ci-dessous) :"
+                : "Réponses rapides suggérées :"}
             </p>
             <QuickReplies
-              replies={INITIAL_QUICK_REPLIES}
+              replies={activeQuickReplies}
               onSelect={handleSendMessage}
               disabled={isLoading}
             />
@@ -284,7 +343,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               <span className="h-1.5 w-1.5 rounded-full bg-champagne-fonce animate-bounce [animation-delay:-0.15s]" />
               <span className="h-1.5 w-1.5 rounded-full bg-champagne-fonce animate-bounce" />
               <span className="ml-1 text-[11px] font-medium text-gris">
-                Votre opticienne vous répond...
+                Analyse optique en cours...
               </span>
             </div>
           </div>
@@ -293,7 +352,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Zone de saisie utilisateur principale (libre comme sur WhatsApp) */}
+      {/* Zone de saisie utilisateur principale (text-base sur mobile pour éviter le zoom forcé iOS) */}
       <footer className="shrink-0 border-t border-nuit/10 bg-white p-3 safe-bottom">
         <form onSubmit={handleFormSubmit} className="flex items-center gap-2">
           {/* Raccourci discret direct WhatsApp */}
@@ -315,10 +374,10 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Écrivez votre message..."
+              placeholder="Décrivez votre besoin (écrans, vue, monture...)"
               maxLength={400}
               disabled={isLoading}
-              className="w-full rounded-full border border-nuit/15 bg-ivoire/60 px-4 py-2.5 text-xs text-nuit placeholder:text-gris focus:border-champagne focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-champagne/30"
+              className="w-full rounded-full border border-nuit/15 bg-ivoire/60 px-4 py-2.5 text-base sm:text-xs text-nuit placeholder:text-gris focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/30"
             />
           </div>
 
@@ -334,7 +393,7 @@ export function ChatWindow({ isOpen, onClose }: ChatWindowProps) {
         </form>
 
         <div className="mt-2 flex items-center justify-between px-1 text-[10px] text-gris">
-          <span>Horaires atelier : Lun-Ven 8h-20h • Sam 8h-14h</span>
+          <span>Permanences : Lun 8h-20h • Sam 8h-14h</span>
           <a
             href={whatsappLink(siteMessages.general)}
             target="_blank"

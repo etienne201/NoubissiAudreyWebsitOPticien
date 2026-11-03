@@ -12,7 +12,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   outputFileTracingRoot: path.join(__dirname),
-  images: { formats: ["image/avif", "image/webp"] },
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

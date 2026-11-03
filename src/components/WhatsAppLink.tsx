@@ -5,12 +5,16 @@ import { whatsappLink } from "@/lib/whatsapp";
 type Variant = "primary" | "gold" | "outline" | "outline-light" | "ghost" | "ghost-gold";
 
 const styles: Record<Variant, string> = {
-  primary: "bg-sauge-fonce text-ivoire hover:bg-nuit",
-  gold: "bg-champagne text-nuit hover:bg-ivoire",
-  outline: "border border-nuit/30 text-nuit hover:border-nuit hover:bg-nuit hover:text-ivoire",
-  "outline-light": "border border-ivoire/40 text-ivoire hover:bg-ivoire hover:text-nuit",
-  ghost: "text-sauge-fonce hover:text-nuit underline underline-offset-4",
-  "ghost-gold": "text-champagne hover:text-white underline underline-offset-4",
+  primary:
+    "bg-sauge-fonce text-ivoire shadow-md shadow-sauge-fonce/20 hover:bg-nuit hover:shadow-lg",
+  gold:
+    "bg-gradient-to-r from-champagne via-[#dfc48b] to-champagne text-nuit font-bold shadow-lg shadow-champagne/25 hover:brightness-105 hover:shadow-xl hover:shadow-champagne/35",
+  outline:
+    "border border-nuit/25 bg-white/60 text-nuit hover:border-nuit hover:bg-nuit hover:text-ivoire",
+  "outline-light":
+    "border border-white/25 bg-white/[0.04] text-ivoire backdrop-blur-sm hover:border-champagne hover:bg-champagne hover:text-nuit",
+  ghost: "text-sauge-fonce hover:text-nuit underline-offset-4 hover:underline",
+  "ghost-gold": "text-champagne hover:text-ivoire underline-offset-4 hover:underline",
 };
 
 type Props = {
@@ -33,8 +37,8 @@ export function WhatsAppLink({
 }: Props) {
   const isGhost = variant === "ghost" || variant === "ghost-gold";
   const base = isGhost
-    ? "inline-flex items-center gap-2 text-sm font-semibold py-2"
-    : "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold transition-colors duration-200";
+    ? "group/wa inline-flex items-center gap-2 text-xs sm:text-sm font-semibold py-1.5 transition-colors duration-200"
+    : "group/wa inline-flex min-h-11 sm:min-h-12 items-center justify-center gap-2.5 rounded-full px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 active:scale-[0.98]";
 
   return (
     <a
@@ -44,7 +48,13 @@ export function WhatsAppLink({
       aria-label={ariaLabel ? `${ariaLabel} (ouvre WhatsApp dans un nouvel onglet)` : undefined}
       className={`${base} ${styles[variant]} ${className}`}
     >
-      {icon && <MessageCircle size={18} aria-hidden="true" className="shrink-0" />}
+      {icon && (
+        <MessageCircle
+          size={17}
+          aria-hidden="true"
+          className="shrink-0 transition-transform duration-300 group-hover/wa:scale-110"
+        />
+      )}
       {children}
     </a>
   );

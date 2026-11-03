@@ -7,21 +7,107 @@ import { site, messages as siteMessages } from "@/config/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import { ChatWindow } from "./ChatWindow";
 
+export type OpenChatEventDetail = {
+  message?: string;
+};
+
+/** Utilitaire permettant d'ouvrir l'assistant conversationnel depuis n'importe quelle section avec un message contextuel */
+export function openOpticalAssistant(message?: string) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent<OpenChatEventDetail>("audrey:open-chat", {
+      detail: { message },
+    })
+  );
+}
+
+/** Utilitaire permettant d'ouvrir ou fermer l'assistant depuis la barre de navigation mobile */
+export function toggleOpticalAssistant(forceState?: boolean) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent<{ forceState?: boolean }>("audrey:toggle-chat", {
+      detail: { forceState },
+    })
+  );
+}
+
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [externalPrompt, setExternalPrompt] = useState<string | null>(null);
+  const [isPwaBannerVisible, setIsPwaBannerVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Affiche une invitation proactive après 3.5 secondes si l'utilisateur n'a pas encore cliqué
+  // Diffuse l'état d'ouverture à la barre de navigation mobile
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("audrey:chat-state", {
+        detail: { isOpen },
+      })
+    );
+  }, [isOpen]);
+
+  // Synchronisation avec le menu mobile et la bannière PWA pour éviter toute superposition
+  useEffect(() => {
+    const handlePwaBanner = (event: Event) => {
+      const customEvent = event as CustomEvent<{ isVisible: boolean }>;
+      setIsPwaBannerVisible(Boolean(customEvent.detail?.isVisible));
+    };
+    const handleMenuState = (event: Event) => {
+      const customEvent = event as CustomEvent<{ isOpen: boolean }>;
+      setIsMenuOpen(Boolean(customEvent.detail?.isOpen));
+    };
+
+    window.addEventListener("audrey:pwa-banner-state", handlePwaBanner);
+    window.addEventListener("audrey:menu-state", handleMenuState);
+    return () => {
+      window.removeEventListener("audrey:pwa-banner-state", handlePwaBanner);
+      window.removeEventListener("audrey:menu-state", handleMenuState);
+    };
+  }, []);
+
+  // Affiche une invitation proactive après 10 secondes si l'utilisateur n'a pas encore cliqué
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!hasInteracted && !isOpen) {
         setShowTooltip(true);
       }
-    }, 3500);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, [hasInteracted, isOpen]);
+
+  // Écoute des événements d'ouverture depuis le diagnostic optique, les fiches produits ou la barre mobile
+  useEffect(() => {
+    const handleCustomOpen = (event: Event) => {
+      const customEvent = event as CustomEvent<OpenChatEventDetail>;
+      setIsOpen(true);
+      setShowTooltip(false);
+      setHasInteracted(true);
+      if (customEvent.detail?.message) {
+        setExternalPrompt(customEvent.detail.message);
+      }
+    };
+
+    const handleCustomToggle = (event: Event) => {
+      const customEvent = event as CustomEvent<{ forceState?: boolean }>;
+      setShowTooltip(false);
+      setHasInteracted(true);
+      if (typeof customEvent.detail?.forceState === "boolean") {
+        setIsOpen(customEvent.detail.forceState);
+      } else {
+        setIsOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("audrey:open-chat", handleCustomOpen);
+    window.addEventListener("audrey:toggle-chat", handleCustomToggle);
+    return () => {
+      window.removeEventListener("audrey:open-chat", handleCustomOpen);
+      window.removeEventListener("audrey:toggle-chat", handleCustomToggle);
+    };
+  }, []);
 
   const handleOpenChat = () => {
     setIsOpen(true);
@@ -42,13 +128,18 @@ export function ChatbotWidget() {
   return (
     <aside aria-label="Assistant virtuel et assistance WhatsApp" className="fixed bottom-4 right-4 z-40 md:bottom-6 md:right-6">
       {/* Fenêtre de conversation */}
-      <ChatWindow isOpen={isOpen} onClose={handleCloseChat} />
+      <ChatWindow
+        isOpen={isOpen}
+        onClose={handleCloseChat}
+        externalPrompt={externalPrompt}
+        onExternalPromptConsumed={() => setExternalPrompt(null)}
+      />
 
-      {/* Bulle d'invitation proactive / Tooltip d'accueil (discrète) */}
-      {showTooltip && !isOpen && (
+      {/* Bulle d'invitation proactive / Tooltip d'accueil (discrète, sans conflit avec la bannière PWA ni le menu) */}
+      {showTooltip && !isOpen && !isMenuOpen && !isPwaBannerVisible && (
         <div
           role="status"
-          className="animate-in fade-in slide-in-from-bottom-2 absolute bottom-16 right-0 mb-2 w-72 rounded-2xl border border-champagne/40 bg-white/95 p-3.5 shadow-xl shadow-nuit/20 backdrop-blur-md md:w-80"
+          className="animate-in fade-in slide-in-from-bottom-2 fixed inset-x-4 bottom-[5.5rem] mx-auto max-w-sm rounded-2xl border border-champagne/40 bg-white/95 p-3.5 shadow-xl shadow-nuit/25 backdrop-blur-md lg:absolute lg:inset-x-auto lg:bottom-16 lg:right-0 lg:mb-2 lg:w-80"
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-center gap-2">
@@ -94,8 +185,8 @@ export function ChatbotWidget() {
         </div>
       )}
 
-      {/* Bouton déclencheur flottant principal */}
-      <div className="flex items-center gap-2">
+      {/* Bouton déclencheur flottant principal (sur Desktop — sur Mobile il est intégré au centre de la barre de navigation) */}
+      <div className="hidden items-center gap-2 lg:flex">
         {/* Accès rapide direct WhatsApp (sur desktop) */}
         {!isOpen && (
           <a
@@ -123,7 +214,6 @@ export function ChatbotWidget() {
               ? "h-12 w-12 bg-nuit text-ivoire ring-2 ring-champagne"
               : "h-14 w-14 bg-sauge-fonce text-ivoire ring-2 ring-champagne/80 hover:bg-nuit md:h-auto md:w-auto md:gap-3 md:px-5 md:py-3.5"
           }`}
-          style={{ marginBottom: "env(safe-area-inset-bottom)" }}
         >
           {isOpen ? (
             <X size={22} aria-hidden="true" />

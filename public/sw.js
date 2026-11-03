@@ -1,4 +1,4 @@
-const CACHE_NAME = "audrey-optique-v2";
+const CACHE_NAME = "audrey-optique-v4";
 const STATIC_ASSETS = [
   "/",
   "/offline",
@@ -19,7 +19,14 @@ const STATIC_ASSETS = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
+      // Pré-mise en cache résiliente en arrière-plan : un actif lent ne bloque pas tout le Service Worker
+      return Promise.allSettled(
+        STATIC_ASSETS.map((url) =>
+          cache.add(url).catch(() => {
+            // Ignoré silencieusement si une ressource optionnelle échoue sur réseau lent
+          })
+        )
+      );
     })
   );
   self.skipWaiting();
@@ -43,12 +50,12 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const { request } = event;
 
-  // Ignore non-GET requests or external API calls (e.g. WhatsApp, CDNs)
+  // Ignore non-GET requests or external API calls (e.g. WhatsApp, POST /api/chat)
   if (request.method !== "GET" || !request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  // Fonts & static assets / images: Cache-First
+  // Fonts & static assets / images: Cache-First with background refresh
   if (
     request.destination === "font" ||
     request.destination === "image" ||
@@ -60,13 +67,15 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached;
-        return fetch(request).then((response) => {
-          if (response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          }
-          return response;
-        });
+        return fetch(request)
+          .then((response) => {
+            if (response.status === 200) {
+              const clone = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+            }
+            return response;
+          })
+          .catch(() => cached);
       })
     );
     return;
@@ -82,7 +91,9 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match("/offline") || caches.match("/"))
+          caches
+            .match(request)
+            .then((cached) => cached || caches.match("/offline") || caches.match("/"))
         )
     );
   }

@@ -2,8 +2,27 @@
 
 import { useState } from "react";
 import { appointmentMotives, site } from "@/config/site";
+import { OpticalBackground } from "../OpticalBackground";
+import { PatientConsultationIllustration } from "../OpticalIllustrations";
 import { Reveal } from "../Reveal";
-import { Calendar, Clock, MessageSquare, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+import {
+  Clock,
+  MessageSquare,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  Glasses,
+  FileCheck2,
+  Sun,
+  Wrench,
+} from "lucide-react";
+
+const motiveIcons: Record<string, typeof Glasses> = {
+  new: Glasses,
+  renew: FileCheck2,
+  sun: Sun,
+  adjust: Wrench,
+};
 
 export function AppointmentBooking() {
   const [selectedMotive, setSelectedMotive] = useState<string>(appointmentMotives[0].id);
@@ -33,32 +52,52 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
   const waHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <section id="rendez-vous" aria-labelledby="booking-title" className="mx-auto max-w-page px-5 py-20 md:px-8 md:py-28">
-      <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 items-center">
+    <section
+      id="rendez-vous"
+      aria-labelledby="booking-title"
+      className="relative overflow-hidden mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-28"
+    >
+      <OpticalBackground variant="consultation" tone="light" />
+      <div className="relative z-10 grid gap-10 sm:gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 items-center">
         <Reveal>
           <div>
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sauge-fonce">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
               <Sparkles size={14} aria-hidden="true" /> Conciergerie Optique
             </span>
-            <h2 id="booking-title" className="mt-2 font-serif text-3xl font-medium leading-tight text-nuit md:text-5xl">
+            <h2
+              id="booking-title"
+              className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
+            >
               Planifiez votre échange ou votre passage
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-gris-fonce md:text-lg">
-              Prenez rendez-vous en quelques clics pour un conseil personnalisé sans attente. Renseignez vos préférences et envoyez votre demande directement à Audrey sur WhatsApp.
+            <p className="mt-3 sm:mt-4 text-fluid-lead text-gris-fonce">
+              Prenez rendez-vous en quelques clics pour un conseil personnalisé sans attente.
+              Renseignez vos préférences et envoyez votre demande directement à Audrey sur WhatsApp.
             </p>
 
-            <div className="mt-8 space-y-4">
-              <div className="flex items-start gap-3 rounded-2xl bg-sauge-pale/60 p-4 ring-1 ring-sauge-fonce/15">
-                <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-sauge-fonce" aria-hidden="true" />
-                <p className="text-sm text-gris-fonce">
-                  <strong>Sans engagement ni frais :</strong> l&apos;accueil, le bilan visagisme et le conseil monture sont entièrement personnalisés.
+            {/* Illustration Consultation & Dossier Patient (Catégorie C) */}
+            <div className="mt-6 flex items-center justify-center rounded-2xl bg-ivoire/70 p-3 ring-1 ring-nuit/5 sm:justify-start">
+              <PatientConsultationIllustration />
+            </div>
+
+            <div className="mt-5 sm:mt-6 space-y-3.5">
+              <div className="flex items-start gap-3.5 rounded-2xl bg-sauge-pale/60 p-4 ring-1 ring-sauge-fonce/15">
+                <span className="icon-badge-sage flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sauge-fonce">
+                  <CheckCircle2 size={18} aria-hidden="true" />
+                </span>
+                <p className="text-xs sm:text-sm leading-relaxed text-gris-fonce">
+                  <strong className="text-nuit">Sans engagement ni frais :</strong> l&apos;accueil,
+                  le bilan visagisme et le conseil monture sont entièrement personnalisés.
                 </p>
               </div>
 
-              <div className="flex items-start gap-3 rounded-2xl bg-ivoire p-4 ring-1 ring-nuit/5">
-                <Clock size={20} className="mt-0.5 shrink-0 text-champagne-fonce" aria-hidden="true" />
-                <p className="text-sm text-gris-fonce">
-                  <strong>Horaires d&apos;accueil à Douala :</strong> Lundi (08h - 20h) et Samedi (08h - 14h). Prise de contact WhatsApp ouverte 24h/24.
+              <div className="flex items-start gap-3.5 rounded-2xl bg-ivoire p-4 ring-1 ring-nuit/5">
+                <span className="icon-badge-gold flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-champagne-fonce">
+                  <Clock size={18} aria-hidden="true" />
+                </span>
+                <p className="text-xs sm:text-sm leading-relaxed text-gris-fonce">
+                  <strong className="text-nuit">Horaires d&apos;accueil à Douala :</strong> Lundi
+                  (08h - 20h) et Samedi (08h - 14h). Prise de contact WhatsApp ouverte 24h/24.
                 </p>
               </div>
             </div>
@@ -66,8 +105,8 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="rounded-3xl bg-white p-6 shadow-md ring-1 ring-nuit/10 sm:p-8">
-            <h3 className="font-serif text-2xl font-medium text-nuit">
+          <div className="rounded-3xl bg-white p-5 shadow-md ring-1 ring-nuit/10 sm:p-8">
+            <h3 className="font-serif text-fluid-h3 font-medium text-nuit">
               Personnaliser votre demande
             </h3>
             <p className="mt-1 text-xs text-gris-fonce">
@@ -83,7 +122,10 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
             >
               {/* Nom facultatif */}
               <div>
-                <label htmlFor="client-name" className="block text-xs font-bold uppercase tracking-wider text-nuit">
+                <label
+                  htmlFor="client-name"
+                  className="block text-xs font-bold uppercase tracking-wider text-nuit"
+                >
                   Votre nom ou prénom (facultatif)
                 </label>
                 <input
@@ -92,7 +134,7 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                   placeholder="Ex : Danielle, Marc..."
-                  className="mt-1.5 w-full rounded-2xl border border-nuit/15 bg-ivoire/30 px-4 py-2.5 text-sm text-nuit placeholder:text-gris focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/20"
+                  className="mt-1.5 w-full rounded-2xl border border-nuit/15 bg-ivoire/30 px-4 py-2.5 text-base sm:text-sm text-nuit placeholder:text-gris focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/20"
                 />
               </div>
 
@@ -104,18 +146,24 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
                 <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {appointmentMotives.map((m) => {
                     const active = selectedMotive === m.id;
+                    const MotiveIcon = motiveIcons[m.id] ?? Glasses;
                     return (
                       <button
                         key={m.id}
                         type="button"
                         onClick={() => setSelectedMotive(m.id)}
-                        className={`rounded-2xl p-3 text-left text-xs font-semibold transition-all ${
+                        className={`flex items-center gap-2.5 rounded-2xl p-3 text-left text-xs font-semibold transition-all active:scale-[0.98] ${
                           active
-                            ? "bg-nuit text-ivoire ring-2 ring-champagne"
+                            ? "bg-nuit text-ivoire ring-2 ring-champagne shadow-xs"
                             : "bg-ivoire/60 text-nuit hover:bg-ivoire ring-1 ring-nuit/10"
                         }`}
                       >
-                        {m.label}
+                        <MotiveIcon
+                          size={15}
+                          className={active ? "text-champagne shrink-0" : "text-sauge-fonce shrink-0"}
+                          aria-hidden="true"
+                        />
+                        <span>{m.label}</span>
                       </button>
                     );
                   })}
@@ -124,14 +172,17 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
 
               {/* Créneau souhaité */}
               <div>
-                <label htmlFor="slot-select" className="block text-xs font-bold uppercase tracking-wider text-nuit">
+                <label
+                  htmlFor="slot-select"
+                  className="block text-xs font-bold uppercase tracking-wider text-nuit"
+                >
                   Créneau de préférence
                 </label>
                 <select
                   id="slot-select"
                   value={preferredSlot}
                   onChange={(e) => setPreferredSlot(e.target.value)}
-                  className="mt-1.5 w-full rounded-2xl border border-nuit/15 bg-ivoire/30 px-4 py-2.5 text-sm text-nuit focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/20"
+                  className="mt-1.5 w-full rounded-2xl border border-nuit/15 bg-ivoire/30 px-4 py-2.5 text-base sm:text-sm text-nuit focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/20"
                 >
                   {slots.map((s) => (
                     <option key={s} value={s}>
@@ -150,7 +201,10 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
                   onChange={(e) => setHasPrescription(e.target.checked)}
                   className="h-4 w-4 rounded border-nuit/30 text-champagne focus:ring-champagne"
                 />
-                <label htmlFor="prescription-check" className="text-xs text-gris-fonce cursor-pointer">
+                <label
+                  htmlFor="prescription-check"
+                  className="text-xs text-gris-fonce cursor-pointer"
+                >
                   J&apos;ai une ordonnance médicale ophtalmologique récente
                 </label>
               </div>
@@ -168,7 +222,7 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
               {/* Bouton d'action */}
               <button
                 type="submit"
-                className="flex w-full min-h-12 items-center justify-center gap-2 rounded-full bg-champagne px-6 py-3.5 text-sm font-bold text-nuit transition-all duration-200 hover:bg-champagne/90 hover:shadow-lg hover:shadow-champagne/25"
+                className="flex w-full min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-champagne via-[#e2c78e] to-champagne px-6 py-3.5 text-sm font-bold text-nuit shadow-lg shadow-champagne/25 transition-all duration-200 hover:brightness-105 active:scale-[0.98]"
               >
                 <MessageSquare size={18} aria-hidden="true" />
                 <span>Envoyer ma demande sur WhatsApp</span>

@@ -57,4 +57,19 @@ describe("Route API /api/chat", () => {
     expect(data.isEmergency).toBe(true);
     expect(data.text).toContain("urgence ophtalmologique");
   });
+
+  it("assainit et tolère un historique malformé sans erreur serveur", async () => {
+    const req = new NextRequest("http://localhost:3000/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "Je passe beaucoup de temps devant mon écran",
+        history: [null, 42, { role: "unknown", content: "test" }],
+      }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.category).toBe("lenses");
+  });
 });

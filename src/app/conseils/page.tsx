@@ -28,7 +28,7 @@ const jsonLd = {
   author: {
     "@type": "Person",
     name: site.name,
-    jobTitle: "Opticienne Diplômée",
+    jobTitle: "Opticienne-Lunetière",
   },
   publisher: {
     "@type": "Optician",

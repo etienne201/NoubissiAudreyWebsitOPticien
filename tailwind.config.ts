@@ -17,7 +17,17 @@ const config: Config = {
         serif: ["var(--font-serif)", "Georgia", "serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
-      maxWidth: { page: "72rem" },
+      maxWidth: { page: "72rem", header: "82rem" },
+      spacing: {
+        13: "3.25rem",
+        15: "3.75rem",
+        18: "4.5rem",
+        22: "5.5rem",
+      },
+      boxShadow: {
+        "2xs": "0 1px 2px 0 rgb(0 0 0 / 0.04)",
+        xs: "0 1px 3px 0 rgb(0 0 0 / 0.07)",
+      },
     },
   },
   plugins: [],

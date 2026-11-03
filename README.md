@@ -1,53 +1,37 @@
-# Audrey Noubissi, opticienne à Douala
+# Audrey Noubissi — Espace Conseil en Optique-Lunetterie (Douala)
 
-Portfolio vitrine : Next.js (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion, Lucide.
-Aucun backend, aucune base de données, aucun formulaire : le contact passe par WhatsApp (`https://wa.me/237657268355`) avec des messages préremplis.
+Application web progressive (PWA) haut de gamme pour **Audrey Noubissi (Noubissie)**, opticienne-lunetière à Douala (Cameroun), forte de plus de 3 ans d'expérience pratique sur le terrain (initiée par sa mère) et d'une formation supérieure en **BTS Opticien-Lunetier**.
 
-## Installation et développement (pnpm)
+## Architecture & Technologies
+
+- **Framework** : Next.js 15 (App Router), React 19, TypeScript strict (`tsc --noEmit`)
+- **Design System** : Tailwind CSS (palette Nuit, Ivoire, Sauge, Or Champagne), typographies locales `Fraunces` (serif éditorial) et `Manrope` (sans-serif haute lisibilité), animations accessibles `Framer Motion` (`reducedMotion="user"`)
+- **Moteurs Métier Optique** :
+  - [`src/config/site.ts`](./src/config/site.ts) : Source unique de vérité (identité, horaires Africa/Douala, catalogue de montures avec dimensions normées, géométries de verres, indices de réfraction 1.50 / 1.60 / 1.67-1.74, traitements et FAQ déontologique).
+  - [`src/lib/optical-advisor.ts`](./src/lib/optical-advisor.ts) : Moteur d'accompagnement et de diagnostic optique en 4 étapes (usages, inconforts ressentis, situation d'ordonnance, préférences de style et budget/assurance) avec orientation déontologique vers l'ophtalmologiste lorsque nécessaire.
+  - [`src/lib/chatbot-engine.ts`](./src/lib/chatbot-engine.ts) & [`src/app/api/chat/route.ts`](./src/app/api/chat/route.ts) : Assistant conversationnel spécialisé en optique-lunetterie avec mémoire multi-tours, triage d'urgence médicale, parcours fatigue écrans, explication des avantages/limites des verres et passerelle optionnelle vers Gemini / OpenAI avec fallback déterministe local.
+- **PWA & Résilience Mobile** : Manifeste Web App, Service Worker (`public/sw.js`) avec cache des actifs critiques et page de secours hors-ligne (`/offline`).
+
+## Installation et développement
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:3000
+pnpm dev          # Serveur de développement sur http://localhost:3000
 ```
 
-## Qualité
+## Vérification & Qualité
 
 ```bash
-pnpm lint         # vérification TypeScript
-pnpm test         # tests des liens WhatsApp et des horaires
-pnpm build        # build de production
-pnpm start        # lance le build en local
+pnpm lint         # Vérification statique TypeScript (tsc --noEmit)
+pnpm test         # Suite de tests unitaires et d'intégration (Vitest)
+pnpm build        # Build de production Next.js
 ```
 
-## Où modifier les informations
+##Variables d'environnement (optionnelles)
 
-Tout est dans `src/config/site.ts` : textes, horaires (`schedule`), services, assurances (`insurers`), messages WhatsApp, adresse, réseaux sociaux, portrait et photos de la galerie. Les champs vides ne sont pas affichés.
+- `NEXT_PUBLIC_SITE_URL` : URL canonique de production (ex. `https://audrey-noubissi.com`)
+- `GEMINI_API_KEY` ou `OPENAI_API_KEY` : Clé API optionnelle côté serveur pour enrichir l'assistant conversationnel `/api/chat`. Sans clé configurée, le moteur optique interne (`ChatbotEngine`) assure 100 % des réponses de manière autonome et instantanée.
 
-- Ajouter un jour d'ouverture : ajouter une ligne dans `schedule` (0 = dimanche … 6 = samedi).
-- Ajouter des photos : les placer dans `public/images/` puis les déclarer dans `galleryPhotos`.
-- Le badge Ouvert / Fermé utilise le fuseau `Africa/Douala`.
+## Déontologie médicale
 
-## Déploiement sur Vercel
-
-1. Pousser le projet sur GitHub.
-2. Sur vercel.com : **Add New > Project**, importer le dépôt (Vercel détecte Next.js et pnpm).
-3. Ajouter la variable d'environnement `NEXT_PUBLIC_SITE_URL` avec l'URL finale (ex. `https://www.audreynoubissi.com`), puis déployer.
-4. Associer le nom de domaine, puis soumettre `https://votre-domaine/sitemap.xml` dans Google Search Console.
-
-HTTPS est fourni par Vercel. Le site est installable sur l'écran d'accueil (PWA : manifeste et icônes). Ce n'est pas une application native.
-
-## Identité visuelle
-
-Logo vectoriel dans `public/brand/` (horizontal, horizontal sur fond sombre, compact). Les polices sont intégrées dans `src/app/fonts/` (Fraunces et Manrope, licence SIL OFL).
-Les SVG utilisent des polices système de secours : pour des fichiers d'impression, convertir le texte en tracés dans un éditeur vectoriel.
-
-## Informations à fournir par Audrey
-
-1. Adresse exacte ou quartier à Douala, et lien Google Maps (`address`, `mapsUrl`).
-2. Autres jours d'ouverture, si elle en a (seuls lundi et samedi sont affichés).
-3. Confirmation des services affichés (ajustement, entretien, réparations, lentilles de contact, accessoires). Examens de vue : non mentionnés tant que la qualification n'est pas confirmée.
-4. Comment fonctionne la prise en charge par les assurances Escoma, Zenith, WTW et Olea, pour préciser le texte.
-5. Photos autorisées (produits, espace de travail) et portrait.
-6. Livraison, moyens de paiement, réseaux sociaux (Facebook, Instagram, TikTok).
-7. Hébergeur et éditeur pour les mentions légales (actuellement : Vercel Inc.).
-8. Nom de domaine définitif.
+L'application distingue strictement les actes médicaux réservés au **médecin ophtalmologiste** (diagnostic des pathologies oculaires, examen médical de la réfraction et prescription d'ordonnance) du rôle de conseil, de visagisme, de choix des verres, de prise de mesures pupillaires et d'ajustage exercé par l'**opticienne-lunetière**.

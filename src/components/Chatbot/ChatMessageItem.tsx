@@ -31,10 +31,10 @@ export function ChatMessageItem({ message, onQuickReplySelect }: ChatMessageItem
         <div
           className={`rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
             isUser
-              ? "rounded-tr-xs bg-nuit text-ivoire font-medium"
+              ? "rounded-tr-sm bg-nuit text-ivoire font-medium"
               : message.isEmergency
-              ? "rounded-tl-xs border-2 border-red-500/80 bg-red-50 text-red-950"
-              : "rounded-tl-xs border border-nuit/10 bg-white/95 text-nuit"
+              ? "rounded-tl-sm border-2 border-red-500/80 bg-red-50 text-red-950"
+              : "rounded-tl-sm border border-nuit/10 bg-white/95 text-nuit"
           }`}
         >
           {/* Alerte Urgence en tête si présent */}

@@ -5,10 +5,12 @@
 
 export const site = {
   name: "Audrey Noubissi",
-  title: "Audrey Noubissi, opticienne à Douala",
-  tagline: "Opticienne à Douala",
+  fullName: "Audrey Noubissi (Noubissie)",
+  title: "Audrey Noubissi, opticienne-lunetière à Douala",
+  tagline: "Opticienne-Lunetière à Douala",
+  qualification: "Formation BTS Opticien-Lunetier & 3+ ans d'expérience terrain",
   description:
-    "Audrey Noubissi, opticienne à Douala avec trois ans d'expérience : montures haut de gamme, verres de précision, lunettes de soleil polarisées, conseils bienveillants et contact direct sur WhatsApp.",
+    "Audrey Noubissi, opticienne-lunetière à Douala forte de plus de trois ans d'expérience pratique transmise par sa mère et d'une formation BTS en optique-lunetterie : bilan des besoins visuels, choix de montures, verres de précision et accompagnement sur WhatsApp.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://audrey-noubissi.com").replace(/\/$/, ""),
   locale: "fr_CM",
   experienceYears: 3,
@@ -32,6 +34,9 @@ export const site = {
     instagram: "",
     tiktok: "",
   },
+  /** Mentions déontologiques claires */
+  ethicsDisclaimer:
+    "Audrey Noubissi exerce en tant qu'opticienne-lunetière conseillère. Ses recommandations portent sur l'équipement optique (montures, verres, mesures et confort visuel) et ne se substituent jamais à un diagnostic médical ni à une consultation auprès d'un médecin ophtalmologiste.",
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -50,8 +55,9 @@ export const schedule: DaySchedule[] = [
   { day: 6, label: "Samedi", open: "08:00", close: "14:00" },
 ];
 
-export const productSalesNote = "Commandez vos produits à toute heure sur WhatsApp, 24h/24.";
-export const responseNote = "Audrey vous répond pendant ses horaires d'accueil.";
+export const scheduleHumanSummary = "Lundi de 08h à 20h et Samedi de 08h à 14h (autres créneaux sur rendez-vous via WhatsApp)";
+export const productSalesNote = "Commandez ou préparez votre dossier à toute heure sur WhatsApp, 24h/24.";
+export const responseNote = "Audrey vous répond personnellement lors de ses permanences d'accueil.";
 
 /* ------------------------------------------------------------------ */
 /* Messages WhatsApp préremplis                                         */
@@ -75,10 +81,11 @@ export const messages = {
 
 export const nav = [
   { href: "/#accueil", label: "Accueil" },
-  { href: "/#apropos", label: "À propos" },
-  { href: "/#services", label: "Prestations" },
-  { href: "/#morphologie", label: "Morphologie" },
-  { href: "/#collections", label: "Collections" },
+  { href: "/#diagnostic", label: "Diagnostic Conseil" },
+  { href: "/#collections", label: "Montures" },
+  { href: "/#technologies", label: "Laboratoire Verres" },
+  { href: "/#morphologie", label: "Visagisme" },
+  { href: "/#apropos", label: "Savoir-faire" },
   { href: "/#rendez-vous", label: "Rendez-vous" },
   { href: "/conseils", label: "Guide Vision" },
   { href: "/#contact", label: "Contact" },
@@ -111,35 +118,35 @@ export const products: Service[] = [
   {
     icon: "glasses",
     title: "Montures de lunettes de vue",
-    description: "Montures acétate fait main, titane léger et designs intemporels adaptés à chaque morphologie.",
+    description: "Montures en acétate de cellulose, titane léger et lignes intemporelles sélectionnées pour leur tenue et leur confort.",
     cta: "Découvrir les montures",
     message: "Bonjour Audrey, je souhaiterais voir les montures de vue disponibles. Pouvez-vous me renseigner ?",
   },
   {
     icon: "layers",
-    title: "Verres de haute précision",
-    description: "Verres unifocaux et progressifs avec traitements antireflet, filtre lumière bleue et photochromie.",
+    title: "Verres optiques de précision",
+    description: "Verres unifocaux, proximité et progressifs avec traitements antireflet multicouche, filtre lumière bleue et photochromie.",
     cta: "Conseils sur les verres",
     message: "Bonjour Audrey, je souhaiterais des informations sur vos verres de précision et leurs traitements. Pouvez-vous m'éclairer ?",
   },
   {
     icon: "sun",
     title: "Lunettes de soleil polarisées",
-    description: "Protection UV400 maximale contre le fort ensoleillement de Douala, avec ou sans correction.",
+    description: "Protection certifiée UV400 contre le fort ensoleillement et la réverbération à Douala, avec ou sans correction visuelle.",
     cta: "Découvrir les solaires",
     message: "Bonjour Audrey, je recherche des solaires haute protection pour Douala. Quelles montures proposez-vous ?",
   },
   {
     icon: "eye",
-    title: "Lentilles de contact",
-    description: "Lentilles souples journalières ou mensuelles, entretien rigoureux et apprentissage de la pose.",
+    title: "Lentilles de contact & hygiène",
+    description: "Lentilles souples sur prescription, solutions d'entretien stériles et conseils de manipulation adaptés au climat tropical.",
     cta: "Demander sur les lentilles",
     message: "Bonjour Audrey, je souhaite des informations sur les lentilles de contact adaptées à ma correction. Comment procéder ?",
   },
   {
     icon: "package",
     title: "Accessoires & Entretien",
-    description: "Étuis rigides doublés, lingettes microfibres optiques et sprays nettoyants antistatiques.",
+    description: "Étuis rigides protecteurs, microfibres optiques haute densité, cordons et sprays nettoyants doux pour traitements antireflets.",
     cta: "Voir les accessoires",
     message: "Bonjour Audrey, je souhaiterais commander des produits et accessoires d'entretien pour mes lunettes.",
   },
@@ -148,29 +155,29 @@ export const products: Service[] = [
 export const prestations: Service[] = [
   {
     icon: "message",
-    title: "Bilan des besoins visuels",
-    description: "Étude personnalisée de votre mode de vie (écrans, conduite, lecture) pour définir l'équipement idéal.",
+    title: "Analyse des besoins visuels",
+    description: "Entretien personnalisé sur vos habitudes (écrans, conduite, lecture, extérieur) et lecture pédagogique de votre ordonnance.",
     cta: "Échanger avec Audrey",
     message: messages.glasses,
   },
   {
     icon: "face",
     title: "Visagisme & morphologie",
-    description: "Sélection experte des formes et teintes qui subliment les traits de votre visage et votre teint.",
+    description: "Étude des proportions du visage, de l'arête nasale et de la ligne des sourcils pour harmoniser confort, esthétique et correction.",
     cta: "Être conseillé(e)",
     message: "Bonjour Audrey, j'aimerais être guidé(e) pour choisir une monture adaptée à la forme de mon visage.",
   },
   {
     icon: "adjust",
-    title: "Prise de mesures & ajustage",
-    description: "Centrage pupillaire micrométrique, ajustement des branches et plaquettes pour un confort absolu.",
+    title: "Mesures pupillaires & ajustage",
+    description: "Relevé précis des écarts et hauteurs pupillaires, galbe et équilibrage des branches et plaquettes sur votre visage.",
     cta: "Demander un réglage",
     message: "Bonjour Audrey, j'aurais besoin d'un ajustement précis de mes lunettes. Quand puis-je passer ?",
   },
   {
     icon: "wrench",
-    title: "Service après-vente & réparation",
-    description: "Remplacement de vis, redressement de monture déformée et nettoyage complet aux ultrasons.",
+    title: "Atelier entretien & remise en état",
+    description: "Remplacement de vis et plaquettes, redressement de monture déformée et nettoyage approfondi en atelier.",
     cta: "Demander une réparation",
     message: "Bonjour Audrey, mes lunettes ont besoin d'une réparation ou d'un entretien. Comment procéder ?",
   },
@@ -180,36 +187,151 @@ export const prestations: Service[] = [
 /* Traitements et technologies de verres                               */
 /* ------------------------------------------------------------------ */
 
-export const glassTechnologies = [
+export type GlassTechItem = {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  benefit: string;
+  limits: string;
+  idealFor: string[];
+};
+
+export const glassTechnologies: GlassTechItem[] = [
   {
+    id: "blue-light",
     title: "Protection Anti-Lumière Bleue",
     tagline: "Pour les utilisateurs d'écrans, ordinateurs & smartphones",
     description:
-      "Filtre sélectivement les longueurs d'ondes nocives des écrans LED pour réduire la fatigue visuelle, les maux de tête et améliorer l'endormissement.",
-    benefit: "Idéal pour les journées de travail intensives et les études.",
+      "Filtre sélectivement la bande bleu-violet à haute énergie émise par les écrans LED et l'éclairage artificiel, tout en préservant une excellente transparence.",
+    benefit: "Aide à atténuer l'éblouissement numérique et la fatigue visuelle lors des longues journées de bureau ou d'études.",
+    limits: "Ne remplace pas les pauses visuelles régulières (règle 20-20-20) ni une correction optique si un défaut visuel non corrigé est présent.",
+    idealFor: ["Travail sur ordinateur (> 4h/jour)", "Étudiants & développeurs", "Usage intensif du smartphone en soirée"],
   },
   {
+    id: "photochromic",
     title: "Verres Photochromiques",
     tagline: "L'intelligence qui s'adapte au soleil de Douala",
     description:
-      "Parfaitement transparents à l'intérieur, ils se teintent rapidement à l'extérieur sous les rayons UV tropicaux pour un confort sans changer de monture.",
-    benefit: "Deux équipements en un seul : vue et protection solaire continue.",
+      "Clairs en intérieur, ces verres réagissent aux rayons ultraviolets pour se teinter automatiquement en extérieur selon l'intensité lumineuse.",
+    benefit: "Un seul équipement polyvalent pour voir net et réduire l'éblouissement lors de vos déplacements quotidiens.",
+    limits: "Le pare-brise des voitures filtrant déjà une grande partie des UV, la teinte s'active moins au volant : pour de longs trajets routiers, une solaire polarisée dédiée reste préférable.",
+    idealFor: ["Déplacements fréquents intérieur / extérieur", "Sensibilité à la lumière (photophobie)", "Porteurs souhaitant éviter de jongler entre deux paires"],
   },
   {
+    id: "antireflective",
     title: "Antireflet Multicouche Haute Définition",
     tagline: "Clarté visuelle et esthétique sans reflet parasite",
     description:
-      "Élimine les reflets gênants de jour comme de nuit lors de la conduite. Vos yeux restent parfaitement visibles pour vos interlocuteurs.",
-    benefit: "Confort de conduite nocturne et rendu photo / visio exceptionnel.",
+      "Supprime les reflets parasites sur les deux faces du verre pour laisser passer jusqu'à 99% de la lumière utile et rendre le verre quasi invisible.",
+    benefit: "Améliore nettement les contrastes en conduite de nuit face aux phares et valorise votre regard en réunion ou en photo.",
+    limits: "Nécessite un entretien doux (eau tempérée et microfibre propre) car l'essuyage à sec sur la poussière peut altérer les couches de surface.",
+    idealFor: ["Conduite nocturne à Douala", "Réunions, visioconférences & photographie", "Toutes les corrections (indispensable sur verres amincis)"],
   },
   {
+    id: "progressive",
     title: "Verres Progressifs Personnalisés",
     tagline: "Vision nette et continue de près comme de loin",
     description:
-      "Transition fluide sans rupture visuelle pour la presbytie. Champs visuels élargis pour un temps d'adaptation quasi immédiat.",
-    benefit: "Fluidité naturelle pour lire, travailler sur écran et observer au loin.",
+      "Conçus pour la presbytie, ils offrent une variation progressive de puissance du haut vers le bas du verre, sans ligne de séparation visible.",
+    benefit: "Permet de lire son téléphone, travailler sur écran et regarder au loin avec une seule paire de lunettes.",
+    limits: "Demande une prise de mesures millimétrique (écart et hauteur pupillaires) sur la monture choisie et quelques jours d'adaptation naturelle du port de tête.",
+    idealFor: ["Presbytie (généralement dès 40-45 ans)", "Vision multi-distances continue", "Confort quotidien sans retirer ses lunettes"],
   },
-] as const;
+];
+
+/* ------------------------------------------------------------------ */
+/* Catégories de géométries et indices de verres (Laboratoire)         */
+/* ------------------------------------------------------------------ */
+
+export type LensGeometry = {
+  id: string;
+  name: string;
+  subtitle: string;
+  explanation: string;
+  usage: string;
+  limitNote: string;
+  requiresPrescription: boolean;
+};
+
+export const lensGeometries: LensGeometry[] = [
+  {
+    id: "unifocal",
+    name: "Verres Unifocaux (Simple foyer)",
+    subtitle: "Une même puissance optique sur toute la surface du verre",
+    explanation:
+      "Ils corrigent un besoin visuel unique : soit la vision de loin (myopie, hypermétropie, astigmatisme), soit uniquement la vision de près (lunettes de lecture dédiées).",
+    usage: "Port permanent pour voir net de loin comme de près (avant la presbytie), ou paire dédiée exclusivement à la lecture.",
+    limitNote: "Chez une personne presbyte, un verre unifocal réglé pour la lecture de près rendra la vision de loin floue : il faut alors les retirer pour marcher ou conduire.",
+    requiresPrescription: true,
+  },
+  {
+    id: "office",
+    name: "Verres de Proximité & Bureau (Mi-distance)",
+    subtitle: "Confort élargi entre votre clavier, vos documents et votre écran",
+    explanation:
+      "Spécialement étudiés pour le travail sédentaire, ils offrent une zone de vision nette de 40 cm jusqu'à environ 2 mètres, évitant de relever le menton devant l'ordinateur.",
+    usage: "Travail prolongé sur poste informatique, lecture de dossiers, activités manuelles de précision en intérieur.",
+    limitNote: "Conçus pour l'intérieur et le poste de travail : ils ne permettent pas de conduire ni de voir net à grande distance.",
+    requiresPrescription: true,
+  },
+  {
+    id: "progressive",
+    name: "Verres Progressifs",
+    subtitle: "Toutes les distances réunies sans coupure esthétique",
+    explanation:
+      "La partie supérieure assure la vision de loin, la zone centrale accompagne la distance intermédiaire (écran, tableau de bord) et la zone inférieure permet la lecture de près.",
+    usage: "Port quotidien du matin au soir pour les personnes presbytes souhaitant tout faire avec une seule monture.",
+    limitNote: "Exige une monture offrant une hauteur de verre suffisante (minimum 30 mm recommandé) et un centrage rigoureux réalisé avec votre opticienne.",
+    requiresPrescription: true,
+  },
+  {
+    id: "plano-comfort",
+    name: "Verres Neutres de Protection (Sans correction)",
+    subtitle: "Repos visuel sur écran ou protection solaire UV400",
+    explanation:
+      "Dépourvus de puissance dioptrique (0.00), ils intègrent des filtres protecteurs de haute qualité (anti-lumière bleue + antireflet, ou solaire polarisé UV400).",
+    usage: "Personnes n'ayant aucun défaut visuel mais souhaitant protéger leurs yeux de la fatigue numérique ou du rayonnement solaire équatorial.",
+    limitNote: "Si vos maux de tête ou flous visuels persistent malgré un verre de repos, un examen chez un ophtalmologiste est indispensable pour vérifier l'absence d'un besoin de correction.",
+    requiresPrescription: false,
+  },
+];
+
+export type LensIndexOption = {
+  index: string;
+  name: string;
+  correctionRange: string;
+  thicknessReduction: string;
+  description: string;
+  frameAdvice: string;
+};
+
+export const lensIndices: LensIndexOption[] = [
+  {
+    index: "1.50",
+    name: "Organique Standard",
+    correctionRange: "Corrections faibles (±0.00 à ±2.00 δ)",
+    thicknessReduction: "Épaisseur standard • Excellente qualité optique",
+    description: "Léger et très transparent, idéal lorsque la correction est faible et la monture entièrement cerclée.",
+    frameAdvice: "Privilégier les montures cerclées en acétate ou métal.",
+  },
+  {
+    index: "1.59 / 1.60",
+    name: "Aminci Haute Résistance",
+    correctionRange: "Corrections modérées (±2.00 à ±4.00 δ)",
+    thicknessReduction: "Jusqu'à 25% plus fin • Très résistant à la casse",
+    description: "Le compromis idéal entre finesse esthétique, légèreté sur le nez et solidité mécanique pour le quotidien.",
+    frameAdvice: "Compatible avec toutes les montures, y compris demi-cerclées (Nylor) et percées.",
+  },
+  {
+    index: "1.67 / 1.74",
+    name: "Extra-Aminci Haute Précision",
+    correctionRange: "Corrections fortes (au-delà de ±4.25 δ)",
+    thicknessReduction: "Jusqu'à 40% à 50% plus fin • Esthétique préservée",
+    description: "Réduit considérablement l'épaisseur au bord (myopie) ou au centre (hypermétropie) et limite l'effet de grossissement ou de rétrécissement du regard.",
+    frameAdvice: "Toujours associé à un traitement antireflet multicouche. Conseillé avec une monture de calibre maîtrisé.",
+  },
+];
 
 /* ------------------------------------------------------------------ */
 /* Guide Morphologie Visage interactif                                */
@@ -233,7 +355,7 @@ export const faceShapes: FaceShapeGuide[] = [
     name: "Visage Ovale",
     description: "Proportions équilibrées avec des pommettes légèrement plus larges que la mâchoire et le front.",
     recommended: "La plupart des formes vous vont à merveille : montures géométriques, pantos, rondes ou papillon.",
-    avoid: "Les montures excessivement étroites qui déséquilibrent l'harmonie du visage.",
+    avoid: "Les montures excessivement étroites ou trop larges qui débordent des tempes et déséquilibrent l'harmonie naturelle.",
     bestFrames: ["Pantos intemporelles", "Rectangles adoucis", "Formes géométriques"],
     ctaMessage: "Bonjour Audrey, j'ai un visage ovale et j'aimerais voir des modèles pantos ou géométriques adaptés.",
   },
@@ -242,7 +364,7 @@ export const faceShapes: FaceShapeGuide[] = [
     name: "Visage Rond",
     description: "Lignes douces et courbes régulières, avec une largeur et une longueur de visage presque équivalentes.",
     recommended: "Montures angulaires, rectangulaires ou carrées qui étirent le regard et structurent les traits.",
-    avoid: "Les montures parfaitement rondes qui accentuent la rondeur naturelle.",
+    avoid: "Les montures parfaitement rondes ou trop petites qui accentuent la rondeur naturelle.",
     bestFrames: ["Rectangulaires fines", "Carrées structurées", "Wayfarer élégantes"],
     ctaMessage: "Bonjour Audrey, j'ai un visage rond et je cherche des montures structurées pour affiner mes traits.",
   },
@@ -258,9 +380,9 @@ export const faceShapes: FaceShapeGuide[] = [
   {
     id: "heart",
     name: "Visage Cœur / Triangle",
-    description: "Front plus large que la mâchoire, avec un menton délicat et souvent pointu.",
-    recommended: "Montures légères, métal fin, formes douces papillon ou montures plus larges sur la partie inférieure.",
-    avoid: "Les montures trop imposantes sur la barre supérieure qui alourdissent le haut du visage.",
+    description: "Front plus large que la mâchoire, avec un menton délicat et souvent affiné.",
+    recommended: "Montures légères, métal fin, formes douces papillon ou montures équilibrant la partie inférieure du regard.",
+    avoid: "Les montures trop épaisses sur la barre supérieure qui alourdissent le haut du visage.",
     bestFrames: ["Métal fin doré", "Papillon subtil", "Nylor / demi-cerclées"],
     ctaMessage: "Bonjour Audrey, j'ai un visage en cœur/triangle et je cherche une monture légère et élégante.",
   },
@@ -272,20 +394,20 @@ export const faceShapes: FaceShapeGuide[] = [
 
 export const reasons = [
   {
-    title: "Une écoute humaine et attentive",
-    text: "Chaque recommandation part de vos activités et de vos habitudes réelles, jamais d'une formule toute faite.",
+    title: "Un savoir-faire transmis et formé",
+    text: "Plus de 3 ans d'expérience pratique sur le terrain, initiée par sa mère dans le métier, alliés à une formation rigoureuse en BTS Opticien-Lunetier.",
   },
   {
-    title: "Conseils de visagisme sur mesure",
-    text: "Votre morphologie, votre teint et votre personnalité guident le choix pour des lunettes qui vous mettent en valeur.",
+    title: "Une écoute humaine et pédagogique",
+    text: "Chaque recommandation part de vos usages réels (écrans, route, lecture) avec des explications claires sur vos verres et leurs limites.",
   },
   {
-    title: "Clarté et transparence totale",
-    text: "Des explications simples sur vos corrections et le rôle des verres, sans jargon médical intimidant.",
+    title: "Visagisme & confort morphologique",
+    text: "L'équilibre sur l'arête nasale, la largeur de face, le centrage pupillaire et l'harmonie avec votre visage guident chaque sélection.",
   },
   {
-    title: "Accompagnement direct sur WhatsApp",
-    text: "Échangez directement avec votre opticienne, posez vos questions et planifiez votre passage sans friction.",
+    title: "Accompagnement direct & transparent",
+    text: "Échangez directement avec Audrey sur WhatsApp, préparez votre devis d'assurance et bénéficiez d'un suivi attentif en atelier à Douala.",
   },
 ] as const;
 
@@ -296,18 +418,18 @@ export const reasons = [
 export const steps = [
   {
     step: "01",
-    title: "Prise de contact directe",
-    text: "Exposez vos besoins sur WhatsApp, partagez la photo de votre ordonnance ou décrivez vos gênes visuelles quotidiennes.",
+    title: "Découverte des besoins & Ordonnance",
+    text: "Exposez vos habitudes visuelles via notre diagnostic en ligne ou sur WhatsApp, et partagez votre prescription ophtalmologique si vous en disposez.",
   },
   {
     step: "02",
-    title: "Conseils & Sélection personnalisée",
-    text: "Audrey analyse votre correction et sélectionne les montures et géométries de verres idéales pour votre visage et votre budget.",
+    title: "Sélection Monture & Conseil Verres",
+    text: "Audrey vous guide parmi les formes, matériaux et géométries de verres adaptés à votre correction, votre visage et votre budget.",
   },
   {
     step: "03",
-    title: "Montage de précision & Ajustement",
-    text: "Vos lunettes sont montées avec rigueur métrique, vérifiées et soigneusement ajustées sur votre visage à Douala.",
+    title: "Mesures, Montage & Ajustage",
+    text: "Prise des mesures pupillaires, montage soigné des verres et ajustement précis des branches et plaquettes sur votre visage à Douala.",
   },
 ] as const;
 
@@ -321,10 +443,11 @@ export const insuranceMessage =
   "Bonjour Audrey, je suis assuré(e) chez [mon assurance] et je souhaiterais savoir comment se déroule la prise en charge pour mes lunettes.";
 
 /* ------------------------------------------------------------------ */
-/* Galerie de montures signatures                                      */
+/* Galerie de montures signatures & Showroom technique                 */
 /* ------------------------------------------------------------------ */
 
 export type GalleryPhoto = {
+  id: string;
   src: string;
   alt: string;
   width: number;
@@ -332,35 +455,74 @@ export type GalleryPhoto = {
   title: string;
   category: string;
   material: string;
+  shapeLabel: string;
+  shapeFilter: "panto-round" | "square-rect" | "aviator-sun" | "atelier";
+  colors: string[];
+  dimensions: string;
+  weightComfort: string;
+  usage: string;
+  lensCompatibility: string;
+  budgetTier: "Essentiel" | "Équilibre" | "Prestige" | "Sur-mesure";
+  recommendedFaces: FaceShapeId[];
 };
 
 export const galleryPhotos: GalleryPhoto[] = [
   {
+    id: "acetate-ecaille",
     src: "/images/monture-acetate.jpg",
     alt: "Monture haut de gamme en acétate écaille artisanale et branches titane champagne",
     width: 1200,
     height: 900,
     title: "Acétate Écaille Signature",
     category: "Optique de vue",
-    material: "Acétate de cellulose & Titane doré",
+    material: "Acétate de cellulose poli main & Titane doré",
+    shapeLabel: "Pantos structurée",
+    shapeFilter: "panto-round",
+    colors: ["Écaille ambrée", "Or champagne", "Noir profond"],
+    dimensions: "49 □ 20 - 145 mm (Hauteur verre : 41 mm)",
+    weightComfort: "18 g • Pont anatomique confortable, charnières flexibles",
+    usage: "Quotidien, bureau & écrans, réunions professionnelles",
+    lensCompatibility: "Compatible unifocaux, verres de bureau et progressifs (hauteur idéale). Cerclage épais camouflant bien le bord des verres myopes.",
+    budgetTier: "Équilibre",
+    recommendedFaces: ["oval", "square", "heart"],
   },
   {
+    id: "solaire-riviera",
     src: "/images/monture-solaire.jpg",
     alt: "Lunettes de soleil solaires polarisées double pont haute protection UV400",
     width: 1200,
     height: 900,
     title: "Solaire Polarisée Riviera",
     category: "Protection solaire",
-    material: "Alliage brossé champagne & Verres olive polarisés",
+    material: "Alliage brossé champagne & Verres polarisés UV400",
+    shapeLabel: "Navigateur double-pont",
+    shapeFilter: "aviator-sun",
+    colors: ["Or brossé / Vert G15", "Ruthénium / Brun dégradé"],
+    dimensions: "54 □ 18 - 145 mm (Hauteur verre : 45 mm)",
+    weightComfort: "21 g • Plaquettes silicone ajustables anti-glisse (climat humide)",
+    usage: "Conduite de jour à Douala, extérieur intense, bord de mer",
+    lensCompatibility: "Équipée de verres solaires polarisés UV400 catégorie 3. Adaptable à votre correction en unifocal ou progressif solaire.",
+    budgetTier: "Prestige",
+    recommendedFaces: ["oval", "round", "square"],
   },
   {
+    id: "atelier-visagisme",
     src: "/images/audrey-portrait.jpg",
     alt: "Audrey Noubissi dans son atelier d'optique à Douala",
     width: 1200,
     height: 900,
-    title: "L'Atelier Audrey Noubissi",
+    title: "Sélection Titane & Minimalisme (En Atelier)",
     category: "Consultation & Visagisme",
-    material: "Douala, Cameroun",
+    material: "Sélection de montures géométriques, percées & métal fin",
+    shapeLabel: "Rectangulaire, Octogonale & Papillon",
+    shapeFilter: "square-rect",
+    colors: ["Or rose", "Argent palladié", "Écaille claire", "Bleu nuit"],
+    dimensions: "Calibres 46 à 56 mm • Essayage et ajustage sur mesure",
+    weightComfort: "Dès 12 g • Ultra-légères pour un port prolongé sans marque sur le nez",
+    usage: "Séance de visagisme personnalisée avec Audrey à Douala",
+    lensCompatibility: "Conseil personnalisé selon la puissance de votre ordonnance (recommandation d'indice aminci 1.60 ou 1.67 pour les montures fines).",
+    budgetTier: "Sur-mesure",
+    recommendedFaces: ["oval", "round", "square", "heart"],
   },
 ];
 
@@ -389,26 +551,30 @@ export const appointmentMotives = [
 export const faqList = [
   {
     q: "Faut-il obligatoirement une ordonnance médicale pour commander des lunettes ?",
-    a: "Pour des verres correcteurs sur mesure (myopie, astigmatisme, hypermétropie, presbytie), une prescription médicale établie par un ophtalmologiste garantit une correction exacte et permet la prise en charge par les mutuelles. Pour les lunettes de soleil sans correction ou les lunettes de repos neutres anti-lumière bleue, aucune ordonnance n'est requise.",
+    a: "Pour des verres correcteurs sur mesure (myopie, astigmatisme, hypermétropie, presbytie), une prescription médicale établie par un médecin ophtalmologiste garantit une correction exacte, écarte toute pathologie oculaire et permet la prise en charge par les assurances. Pour les lunettes de soleil sans correction ou les lunettes de confort anti-lumière bleue neutres, aucune ordonnance n'est requise.",
+  },
+  {
+    q: "Quelle est la différence entre le rôle de l'opticienne-lunetière et celui de l'ophtalmologiste ?",
+    a: "L'ophtalmologiste est le médecin spécialiste qui examine la santé médicale de vos yeux, dépiste les maladies oculaires et prescrit votre correction. En tant qu'opticienne-lunetière, Audrey analyse vos besoins quotidiens, vous explique votre ordonnance, vous guide dans le choix esthétique et technique de la monture et des verres, réalise les mesures de centrage pupillaire et assure le montage ainsi que l'ajustage sur votre visage.",
   },
   {
     q: "Comment fonctionne la prise en charge avec mon assurance ou mutuelle à Douala ?",
-    a: "Audrey travaille avec les principales assurances au Cameroun (Escoma, Zenith, WTW, Olea). Dès notre premier contact sur WhatsApp, envoyez une photo de votre ordonnance et mentionnez votre assurance : Audrey vous indiquera la démarche et préparera la facture proforma requise pour votre dossier.",
+    a: "Audrey travaille régulièrement avec les principales assurances au Cameroun (Escoma, Zenith, WTW, Olea). Dès votre premier contact sur WhatsApp, envoyez une photo de votre ordonnance et mentionnez votre assurance : Audrey vous indiquera la démarche et préparera la facture proforma normalisée requise pour votre dossier.",
   },
   {
-    q: "Qu'est-ce que le traitement anti-lumière bleue et pourquoi est-il recommandé ?",
-    a: "À l'ère des smartphones, tablettes et ordinateurs portables, nos yeux sont exposés quotidiennement à des flux de lumière bleue à haute énergie. Ce traitement filtre les longueurs d'onde nocives, réduisant notablement les picotements, la sécheresse oculaire et les maux de tête en fin de journée.",
+    q: "Qu'est-ce que le traitement anti-lumière bleue et quelles sont ses limites ?",
+    a: "Exposés aux écrans d'ordinateurs et de smartphones, nos yeux reçoivent un flux accru de lumière bleue à haute énergie. Le filtre sélectif atténue l'éblouissement numérique et aide à réduire la fatigue visuelle en fin de journée. Toutefois, si vous ressentez des maux de tête persistants ou une vision floue, cela peut révéler un besoin de correction visuelle nécessitant l'avis d'un ophtalmologiste.",
   },
   {
     q: "Quel est le délai de confection et de montage de mes lunettes ?",
-    a: "Une fois la monture validée et les mesures micrométriques prises, le taillage et le montage en atelier prennent généralement entre 24h et 72h selon la technicité des verres (unifocaux stock vs progressifs individualisés sur mesure).",
+    a: "Une fois la monture choisie et les mesures pupillaires relevées, le taillage et le montage prennent généralement entre 24h et 72h pour des verres unifocaux courants, et quelques jours supplémentaires pour des verres progressifs ou des traitements spécifiques sur mesure.",
   },
   {
     q: "Proposez-vous un service d'ajustage pour des lunettes qui glissent ou serrent ?",
-    a: "Absolument. Un ajustement précis des branches, du galbe et des plaquettes nasales est indispensable pour que vos lunettes soient stables et confortables tout au long de la journée sans créer de points de pression douloureux.",
+    a: "Absolument. Un ajustement précis des branches, de l'inclinaison (angle pantoscopique) et des plaquettes nasales est indispensable pour que vos lunettes restent stables et confortables toute la journée, tout en maintenant le centre optique des verres bien aligné avec vos pupilles.",
   },
   {
-    q: "Comment commander des produits en dehors des heures d'ouverture ?",
-    a: "Vous pouvez laisser votre message, photo de monture souhaitée ou ordonnance 24h/24 sur WhatsApp. Audrey prend connaissance de votre demande dès l'ouverture de sa permanence et vous répond avec attention.",
+    q: "Comment échanger avec Audrey en dehors des permanences d'accueil ?",
+    a: "Vous pouvez envoyer votre message, le résultat de votre diagnostic en ligne ou la photo de votre ordonnance 24h/24 sur WhatsApp. Audrey prend connaissance de votre demande dès l'ouverture de sa permanence (Lundi 8h-20h, Samedi 8h-14h ou sur rendez-vous convenu) et vous répond personnellement.",
   },
 ] as const;

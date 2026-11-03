@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { ChatbotWidget } from "@/components/Chatbot/ChatbotWidget";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Providers } from "@/components/Providers";
 import { site } from "@/config/site";
 import "./globals.css";
@@ -24,17 +25,19 @@ const sans = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Audrey Noubissi, opticienne à Douala | Lunettes et conseils optiques",
+    default: "Audrey Noubissi, opticienne-lunetière à Douala | Lunettes et conseils optiques",
     template: "%s | Audrey Noubissi",
   },
   description: site.description,
   keywords: [
     "opticienne à Douala",
+    "opticienne-lunetière Douala",
     "lunettes Douala",
     "verres correcteurs Douala",
     "montures de lunettes Douala",
     "lunettes de soleil Douala",
     "Audrey Noubissi opticienne",
+    "Audrey Noubissie opticienne",
   ],
   authors: [{ name: site.name }],
   alternates: { canonical: "/" },
@@ -73,6 +76,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Header />
           <main id="contenu">{children}</main>
           <Footer />
+          <MobileBottomNav />
           <ChatbotWidget />
         </Providers>
       </body>

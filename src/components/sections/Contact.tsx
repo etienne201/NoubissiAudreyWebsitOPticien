@@ -1,4 +1,4 @@
-import { Clock, MapPin, Phone, MessageSquare, ShieldCheck, Sparkles } from "lucide-react";
+import { Clock, MapPin, Phone, Sparkles } from "lucide-react";
 import { messages, productSalesNote, responseNote, schedule, site } from "@/config/site";
 import { formatHour } from "@/lib/hours";
 import { OpenBadge } from "../OpenBadge";
@@ -9,43 +9,59 @@ export function Contact() {
   const districts = ["Akwa", "Bonanjo", "Bali", "Bonamoussadi", "Deido", "Makepe"];
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="mx-auto max-w-page px-5 py-20 md:px-8 md:py-28">
-      <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-28"
+    >
+      <div className="grid gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16 items-start">
         <Reveal>
           <div>
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sauge-fonce">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
               <Sparkles size={14} aria-hidden="true" /> Contact Direct
             </span>
-            <h2 id="contact-title" className="mt-2 font-serif text-4xl font-medium leading-tight text-nuit md:text-5xl">
+            <h2
+              id="contact-title"
+              className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
+            >
               Échangez directement avec Audrey Noubissi
             </h2>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-gris-fonce md:text-lg">
-              Posez une question sur vos verres, demandez conseil pour une monture ou commandez vos lunettes de soleil. Votre message est prérempli : vous le relisez et l&apos;envoyez en un clic.
+            <p className="mt-3 sm:mt-4 max-w-md text-fluid-lead text-gris-fonce">
+              Posez une question sur vos verres, demandez conseil pour une monture ou commandez vos
+              lunettes de soleil. Votre message est prérempli : vous le relisez et l&apos;envoyez en
+              un clic.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-7 sm:mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <WhatsAppLink message={messages.general} variant="gold">
                 Poser une question
               </WhatsAppLink>
               <WhatsAppLink message={messages.glasses} variant="outline">
-                Conseils montures & vue
+                Conseils montures &amp; vue
               </WhatsAppLink>
               <WhatsAppLink message={messages.contact} variant="outline">
                 Prendre rendez-vous
               </WhatsAppLink>
             </div>
 
-            <div className="mt-8 rounded-2xl bg-sauge-pale/40 p-5 ring-1 ring-sauge-fonce/15">
-              <p className="flex items-center gap-3 text-base text-nuit">
-                <Phone size={20} className="text-sauge-fonce shrink-0" aria-hidden="true" />
-                <span>
-                  Appel direct & WhatsApp :{" "}
-                  <a href={`tel:${site.phoneE164}`} className="font-bold underline-offset-4 hover:underline text-sauge-fonce">
+            <div className="mt-7 sm:mt-8 rounded-2xl bg-sauge-pale/40 p-4 sm:p-5 ring-1 ring-sauge-fonce/15">
+              <div className="flex items-center gap-3 text-sm sm:text-base text-nuit">
+                <span className="icon-badge-sage flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sauge-fonce">
+                  <Phone size={18} aria-hidden="true" />
+                </span>
+                <div>
+                  <span className="block text-xs font-semibold uppercase tracking-wider text-gris-fonce">
+                    Appel direct &amp; WhatsApp
+                  </span>
+                  <a
+                    href={`tel:${site.phoneE164}`}
+                    className="font-serif text-lg font-bold underline-offset-4 hover:underline text-sauge-fonce"
+                  >
                     {site.phoneDisplay}
                   </a>
-                </span>
-              </p>
-              <p className="mt-2 text-xs text-gris-fonce">
+                </div>
+              </div>
+              <p className="mt-2.5 text-xs text-gris-fonce">
                 Permanence téléphonique et messagerie WhatsApp à Douala.
               </p>
             </div>
@@ -70,11 +86,13 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="rounded-3xl bg-white p-7 ring-1 ring-nuit/10 shadow-sm md:p-9">
-            <div className="flex items-center justify-between">
-              <h3 className="flex items-center gap-2.5 font-serif text-2xl font-medium text-nuit">
-                <Clock size={22} className="text-sauge-fonce" aria-hidden="true" />
-                Horaires d&apos;accueil
+          <div className="rounded-3xl bg-white p-5 ring-1 ring-nuit/10 shadow-sm sm:p-7 md:p-9">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="flex items-center gap-2.5 font-serif text-xl sm:text-2xl font-medium text-nuit">
+                <span className="icon-badge-sage flex h-9 w-9 items-center justify-center rounded-xl text-sauge-fonce">
+                  <Clock size={18} aria-hidden="true" />
+                </span>
+                <span>Horaires d&apos;accueil</span>
               </h3>
               <OpenBadge tone="dark" />
             </div>
@@ -84,12 +102,18 @@ export function Contact() {
               <tbody className="divide-y divide-nuit/10">
                 {schedule.map((s) => (
                   <tr key={s.day}>
-                    <th scope="row" className="py-3.5 pr-4 font-semibold text-nuit">{s.label}</th>
-                    <td className="py-3.5 text-gris-fonce">{formatHour(s.open)} à {formatHour(s.close)}</td>
+                    <th scope="row" className="py-3.5 pr-4 font-semibold text-nuit">
+                      {s.label}
+                    </th>
+                    <td className="py-3.5 text-gris-fonce">
+                      {formatHour(s.open)} à {formatHour(s.close)}
+                    </td>
                   </tr>
                 ))}
                 <tr>
-                  <th scope="row" className="py-3.5 pr-4 font-semibold text-nuit">Commandes de montures</th>
+                  <th scope="row" className="py-3.5 pr-4 font-semibold text-nuit">
+                    Commandes de montures
+                  </th>
                   <td className="py-3.5 text-sauge-fonce font-medium">24h/24 sur WhatsApp</td>
                 </tr>
               </tbody>
@@ -102,13 +126,17 @@ export function Contact() {
             </div>
 
             <div className="mt-6 flex items-start gap-3 border-t border-nuit/10 pt-5 text-sm text-gris-fonce">
-              <MapPin size={20} className="mt-0.5 shrink-0 text-sauge-fonce" aria-hidden="true" />
+              <span className="icon-badge-sage mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sauge-fonce">
+                <MapPin size={18} aria-hidden="true" />
+              </span>
               <div>
                 <p className="font-semibold text-nuit">
-                  {site.address ? `${site.address}, ` : ""}{site.city}, {site.countryLabel}
+                  {site.address ? `${site.address}, ` : ""}
+                  {site.city}, {site.countryLabel}
                 </p>
                 <p className="text-xs text-gris-fonce mt-0.5">
-                  Consultation sur rendez-vous pour un accompagnement exclusif sans file d&apos;attente.
+                  Consultation sur rendez-vous pour un accompagnement exclusif sans file
+                  d&apos;attente.
                 </p>
                 {site.mapsUrl && (
                   <a
