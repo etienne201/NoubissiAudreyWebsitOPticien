@@ -1,8 +1,10 @@
 "use client";
 
+import { OpticalCosmosBackground, type CosmosScene } from "./OpticalCosmosBackground";
+
 /**
- * Motifs géométriques et arrière-plans optiques discrets (lentilles, iris, cercles dioptriques)
- * adaptés à chaque univers fonctionnel : consultation, laboratoire, atelier, catalogue.
+ * Motifs géométriques et arrière-plans optiques haute précision (lentilles, iris, cercles dioptriques,
+ * ondes de réfraction et particules spectrales) adaptés à chaque univers fonctionnel.
  * Strictement décoratif (aria-hidden="true", pointer-events-none) pour ne jamais gêner la lisibilité.
  */
 export type OpticalBgVariant = "consultation" | "laboratory" | "workshop" | "catalog";
@@ -11,32 +13,51 @@ export function OpticalBackground({
   variant = "consultation",
   tone = "light",
   className = "",
+  withCanvas = true,
 }: {
   variant?: OpticalBgVariant;
   tone?: "light" | "dark";
   className?: string;
+  withCanvas?: boolean;
 }) {
   const strokeMain = tone === "dark" ? "rgb(201 169 110 / 0.09)" : "rgb(14 27 51 / 0.055)";
   const strokeAccent = tone === "dark" ? "rgb(132 160 144 / 0.09)" : "rgb(62 98 82 / 0.065)";
+
+  const sceneMap: Record<OpticalBgVariant, CosmosScene> = {
+    consultation: "diagnostic",
+    laboratory: "laboratory",
+    workshop: "hero",
+    catalog: "showroom",
+  };
 
   return (
     <div
       aria-hidden="true"
       className={`pointer-events-none absolute inset-0 overflow-hidden select-none ${className}`}
     >
+      {/* Simulation vivante d'ondes optiques et de particules de réfraction */}
+      {withCanvas && (
+        <OpticalCosmosBackground
+          scene={sceneMap[variant]}
+          tone={tone}
+          interactive={true}
+          className="opacity-75"
+        />
+      )}
+
       {/* Halo lumineux radial de profondeur (surface optique) */}
       <div
         className={`absolute -top-32 right-1/4 h-96 w-96 rounded-full blur-[110px] ${
-          tone === "dark" ? "bg-champagne/8" : "bg-champagne/10"
+          tone === "dark" ? "bg-champagne/10" : "bg-champagne/12"
         }`}
       />
       <div
         className={`absolute -bottom-32 left-1/4 h-96 w-96 rounded-full blur-[110px] ${
-          tone === "dark" ? "bg-sauge/8" : "bg-sauge/12"
+          tone === "dark" ? "bg-sauge/10" : "bg-sauge/14"
         }`}
       />
 
-      {/* Filigrane géométrique SVG inspiré des lentilles et cercles optiques */}
+      {/* Filigrane géométrique SVG haute précision inspiré des lentilles et cercles optiques */}
       <svg
         viewBox="0 0 1200 600"
         fill="none"
@@ -116,4 +137,3 @@ export function OpticalBackground({
     </div>
   );
 }
-

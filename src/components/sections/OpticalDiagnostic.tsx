@@ -618,18 +618,24 @@ export function OpticalDiagnostic() {
               role="region"
               aria-label="Résultat de votre bilan optique"
             >
-              {/* Synthèse & Reformulation */}
-              <div className="rounded-2xl bg-nuit p-6 text-ivoire sm:p-8">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-champagne/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-champagne">
-                    <CheckCircle2 size={14} /> Bilan Conseil d&apos;Opticienne
-                  </span>
-                  <span className="text-xs text-ivoire/70">Par Audrey Noubissi • Douala</span>
+              {/* Synthèse & Passeport Visuel Numérique */}
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-nuit via-nuit-doux to-nuit p-6 text-ivoire sm:p-8 shadow-xl border border-champagne/30">
+                <div className="bg-optical-grid-dark absolute inset-0 opacity-40 pointer-events-none" />
+                <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-champagne/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-champagne border border-champagne/40">
+                      <CheckCircle2 size={14} /> Passeport Visuel &bull; Audrey Noubissi
+                    </span>
+                    <span className="hidden sm:inline font-mono text-[11px] text-champagne/70">
+                      RÉF-OPT-{answers.usage.toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="text-xs font-medium text-ivoire/80">Atelier Douala &bull; Tiers-Payant Agréé</span>
                 </div>
-                <h3 className="mt-4 font-serif text-fluid-h3 font-medium">
-                  Synthèse de vos besoins visuels
+                <h3 className="relative z-10 mt-4 font-serif text-fluid-h3 font-medium text-ivoire">
+                  Synthèse de votre profil &bull; {recommendation.geometry.name}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-ivoire/85 sm:text-base">
+                <p className="relative z-10 mt-2 text-sm leading-relaxed text-ivoire/90 sm:text-base font-sans">
                   {recommendation.reformulatedNeed}
                 </p>
               </div>

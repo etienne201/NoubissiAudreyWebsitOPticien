@@ -379,6 +379,35 @@ body {
   }
 }
 
+/* Verre optique de précision nouvelle génération & biseau spéculaire */
+.glass-optical-prism {
+  background: radial-gradient(120% 120% at 20% 10%, rgba(255, 255, 255, 0.08) 0%, rgba(14, 27, 51, 0.85) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(201, 169, 110, 0.22);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 0 rgba(132, 160, 144, 0.2),
+    0 20px 45px -10px rgba(5, 10, 22, 0.6);
+}
+
+.specular-border {
+  position: relative;
+}
+
+.specular-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.6) 0%, rgba(132, 160, 144, 0.1) 40%, rgba(201, 169, 110, 0.4) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* Espacement sécurisé pour les barres tactiles et le bouton flottant */
 .safe-bottom {
   padding-bottom: max(1.25rem, env(safe-area-inset-bottom));

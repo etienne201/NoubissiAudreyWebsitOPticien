@@ -1142,6 +1142,7 @@ export function Header() {
                   placeholder="Rechercher : verres progressifs, assurance Escoma, visagisme, ordonnance…"
                   aria-label="Rechercher une rubrique ou un besoin optique"
                   className="w-full rounded-2xl border border-white/15 bg-white/[0.06] py-2.5 pl-10 pr-20 text-base sm:text-sm text-ivoire placeholder:text-ivoire/45 focus:border-champagne focus:bg-white/10 focus:outline-none"
+                  suppressHydrationWarning
                 />
                 {searchQuery ? (
                   <button

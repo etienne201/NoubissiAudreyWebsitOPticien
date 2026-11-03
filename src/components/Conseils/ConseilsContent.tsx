@@ -25,13 +25,12 @@ import { site } from "@/config/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import {
   ContactLensCorneaIllustration,
-  EyeRefractionDiagram,
   LensGeometryIllustration,
   PrescriptionCardIllustration,
   ReadingGlassesIllustration,
-  SnellenChartIllustration,
   TechnicianFrameAdjustmentIllustration,
 } from "../OpticalIllustrations";
+import { PrescriptionDecoderStudio } from "./PrescriptionDecoderStudio";
 
 type Category = "all" | "ecrans" | "soleil" | "entretien" | "ordonnance" | "lentilles";
 
@@ -192,31 +191,6 @@ export function ConseilsContent() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [activePrescriptionTerm, setActivePrescriptionTerm] = useState("sphere");
-  const [simSphere, setSimSphere] = useState<number>(-2.25);
-  const [simCyl, setSimCyl] = useState<number>(-0.75);
-  const [simAdd, setSimAdd] = useState<number>(0);
-
-  const absMaxPower = Math.max(Math.abs(simSphere), Math.abs(simSphere + simCyl));
-  const simDefect =
-    simSphere < 0
-      ? "Myopie (vision de loin floue)"
-      : simSphere > 0
-      ? "Hypermétropie (effort d'accommodation de près)"
-      : "Aucune amétropie sphérique (0.00)";
-  const simAstigmatism =
-    simCyl !== 0
-      ? `Associée à un astigmatisme de ${simCyl.toFixed(2)} δ (compensation de la courbure cornéenne)`
-      : "Sans astigmatisme déclaré";
-  const simPresbyopia =
-    simAdd > 0
-      ? `Avec addition presbyte de +${simAdd.toFixed(2)} δ : éligible aux verres progressifs ou verres de proximité.`
-      : "Vision simple foyer (unifocal).";
-  const simRecommendedIndex =
-    absMaxPower >= 4.25
-      ? "Indice 1.67 / 1.74 Extra-Aminci (jusqu'à 45% plus fin, fortement conseillé avec monture de calibre ≤ 50 mm)"
-      : absMaxPower >= 2.0
-      ? "Indice 1.60 Aminci Haute Résistance (finesse, légèreté et compatibilité toutes montures)"
-      : "Indice 1.50 Organique Standard ou 1.60 selon le type de monture choisi";
 
   // Filtrage combiné catégorie + recherche texte
   const filteredArticles = ARTICLES.filter((art) => {
@@ -280,6 +254,7 @@ export function ConseilsContent() {
                 placeholder="Rechercher un conseil : écrans, UV, ordonnance, rayures..."
                 className="ml-3 w-full bg-transparent text-base sm:text-sm text-ivoire placeholder-ivoire/50 focus:outline-none"
                 aria-label="Rechercher dans le guide optique"
+                suppressHydrationWarning
               />
               {searchQuery && (
                 <button
@@ -519,144 +494,9 @@ export function ConseilsContent() {
             );
           })()}
 
-          {/* Simulateur interactif de valeurs d'ordonnance */}
-          <div className="mt-8 rounded-3xl border border-nuit/10 bg-ivoire/60 p-6 sm:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-serif text-xl font-medium text-nuit sm:text-2xl">
-                Testez les valeurs de votre ordonnance (Simulation pédagogique)
-              </h3>
-              <span className="rounded-full bg-champagne/20 px-3 py-1 font-mono text-xs font-bold text-nuit">
-                {simSphere >= 0 ? `+${simSphere.toFixed(2)}` : simSphere.toFixed(2)}{" "}
-                {simCyl !== 0 ? `(${simCyl.toFixed(2)})` : ""}{" "}
-                {simAdd > 0 ? `Add +${simAdd.toFixed(2)}` : ""}
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-gris-fonce">
-              Ajustez les curseurs selon les chiffres inscrits sur votre ordonnance pour visualiser l&apos;interprétation optique et l&apos;indice d&apos;amincissement recommandé.
-            </p>
-
-            <div className="mt-6 grid gap-6 sm:grid-cols-3">
-              <div className="rounded-2xl bg-white p-4 ring-1 ring-nuit/5">
-                <div className="flex justify-between text-xs font-bold text-nuit">
-                  <label htmlFor="sim-sphere">Sphère (SPH)</label>
-                  <span className="font-mono text-sauge-fonce">
-                    {simSphere >= 0 ? `+${simSphere.toFixed(2)}` : simSphere.toFixed(2)} δ
-                  </span>
-                </div>
-                <input
-                  id="sim-sphere"
-                  type="range"
-                  min={-6}
-                  max={4}
-                  step={0.25}
-                  value={simSphere}
-                  onChange={(e) => setSimSphere(parseFloat(e.target.value))}
-                  className="mt-3 w-full accent-nuit"
-                />
-                <div className="mt-1 flex justify-between text-[10px] text-gris">
-                  <span>-6.00 (Myope)</span>
-                  <span>0.00</span>
-                  <span>+4.00 (Hyperm.)</span>
-                </div>
-              </div>
-
-              <div className="rounded-2xl bg-white p-4 ring-1 ring-nuit/5">
-                <div className="flex justify-between text-xs font-bold text-nuit">
-                  <label htmlFor="sim-cyl">Cylindre (CYL)</label>
-                  <span className="font-mono text-sauge-fonce">{simCyl.toFixed(2)} δ</span>
-                </div>
-                <input
-                  id="sim-cyl"
-                  type="range"
-                  min={-3}
-                  max={0}
-                  step={0.25}
-                  value={simCyl}
-                  onChange={(e) => setSimCyl(parseFloat(e.target.value))}
-                  className="mt-3 w-full accent-nuit"
-                />
-                <div className="mt-1 flex justify-between text-[10px] text-gris">
-                  <span>-3.00 (Astigmate)</span>
-                  <span>0.00 (Aucun)</span>
-                </div>
-              </div>
-
-              <div className="rounded-2xl bg-white p-4 ring-1 ring-nuit/5">
-                <div className="flex justify-between text-xs font-bold text-nuit">
-                  <label htmlFor="sim-add">Addition (ADD)</label>
-                  <span className="font-mono text-sauge-fonce">
-                    {simAdd > 0 ? `+${simAdd.toFixed(2)} δ` : "Aucune"}
-                  </span>
-                </div>
-                <input
-                  id="sim-add"
-                  type="range"
-                  min={0}
-                  max={3}
-                  step={0.25}
-                  value={simAdd}
-                  onChange={(e) => setSimAdd(parseFloat(e.target.value))}
-                  className="mt-3 w-full accent-nuit"
-                />
-                <div className="mt-1 flex justify-between text-[10px] text-gris">
-                  <span>0.00</span>
-                  <span>+1.50</span>
-                  <span>+3.00 (Presbytie)</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 grid items-center gap-6 rounded-2xl bg-white p-5 ring-1 ring-nuit/10 lg:grid-cols-[1.35fr_0.65fr]">
-              <div>
-                <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-sauge-fonce">
-                  Schéma Optique &amp; Focalisation Rétinienne en Temps Réel
-                </p>
-                <EyeRefractionDiagram
-                  sphere={simSphere}
-                  cylindre={simCyl}
-                  addition={simAdd}
-                />
-              </div>
-              <div className="flex flex-col items-center justify-center border-t border-nuit/5 pt-4 text-center lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
-                <SnellenChartIllustration
-                  mode="snellen"
-                  blurLevel={0}
-                  className="max-w-[150px]"
-                />
-                <p className="mt-2 text-[10.5px] leading-snug text-gris">
-                  Tableau de Snellen illustratif (acuité corrigée 10/10). Document pédagogique non
-                  médical.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-5 grid gap-4 rounded-2xl bg-white p-5 ring-1 ring-nuit/10 md:grid-cols-[1.3fr_0.7fr] md:items-center">
-              <div className="space-y-1.5 text-xs leading-relaxed text-gris-fonce">
-                <p>
-                  <strong className="text-nuit">Lecture optique :</strong> {simDefect} • {simAstigmatism}.
-                </p>
-                <p>
-                  <strong className="text-nuit">Géométrie :</strong> {simPresbyopia}
-                </p>
-                <p>
-                  <strong className="text-sauge-fonce">Conseil d&apos;amincissement d&apos;Audrey :</strong>{" "}
-                  {simRecommendedIndex}.
-                </p>
-              </div>
-              <div className="flex md:justify-end">
-                <a
-                  href={whatsappLink(
-                    `Bonjour Audrey, j'ai utilisé le lecteur d'ordonnance sur votre site (valeurs proches de Sphère ${simSphere.toFixed(2)}, Cylindre ${simCyl.toFixed(2)}${simAdd > 0 ? `, Addition +${simAdd.toFixed(2)}` : ""}). Pourriez-vous me conseiller les verres adaptés ?`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-nuit px-5 py-2.5 text-xs font-semibold text-champagne transition-colors hover:bg-nuit-doux"
-                >
-                  <MessageCircle size={15} aria-hidden="true" />
-                  <span>Demander un devis pour cette correction</span>
-                </a>
-              </div>
-            </div>
+          {/* Simulateur interactif de valeurs d'ordonnance haute précision */}
+          <div className="mt-8">
+            <PrescriptionDecoderStudio />
           </div>
         </section>
 

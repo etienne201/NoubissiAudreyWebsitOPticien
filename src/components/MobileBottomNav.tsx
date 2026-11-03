@@ -55,9 +55,15 @@ export function MobileBottomNav() {
   const [showInstallSheet, setShowInstallSheet] = useState(false);
   const [showInstallBanner, setShowInstallBanner] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
 
-  // Détection du mode PWA standalone, iOS et interception de beforeinstallprompt
+  // Détection du mode PWA standalone, statut réseau et interception de beforeinstallprompt
   useEffect(() => {
+    setIsOffline(!navigator.onLine);
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
     const checkStandalone = () => {
       const standaloneMatch =
         window.matchMedia("(display-mode: standalone)").matches ||
@@ -91,6 +97,8 @@ export function MobileBottomNav() {
     window.addEventListener("appinstalled", onAppInstalled);
 
     return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
       window.removeEventListener("beforeinstallprompt", onBeforeInstallPrompt);
       window.removeEventListener("appinstalled", onAppInstalled);
     };
@@ -240,6 +248,18 @@ export function MobileBottomNav() {
 
   return (
     <>
+      {/* Badge statut Hors-ligne PWA pour connexion instable à Douala */}
+      {isOffline && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-x-4 bottom-20 z-40 mx-auto max-w-sm rounded-full bg-nuit/95 px-4 py-2 text-center text-xs font-semibold text-champagne border border-champagne/40 shadow-xl backdrop-blur-md lg:hidden flex items-center justify-center gap-2"
+        >
+          <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+          <span>Mode hors-ligne actif &bull; Fiches d&apos;atelier sauvegardées</span>
+        </div>
+      )}
+
       {/* Bandeau Smart App Install flottant au-dessus du dock (exclusivement Mobile < lg) */}
       {showInstallBanner && !isStandalone && !isChatOpen && !isMenuOpen && (
         <div

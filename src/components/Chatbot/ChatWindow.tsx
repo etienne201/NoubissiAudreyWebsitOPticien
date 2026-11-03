@@ -9,7 +9,6 @@ import {
   MessageCircle,
   Sparkles,
   Info,
-  ExternalLink,
   PencilLine,
 } from "lucide-react";
 import { site, messages as siteMessages } from "@/config/site";
@@ -378,6 +377,7 @@ export function ChatWindow({
               maxLength={400}
               disabled={isLoading}
               className="w-full rounded-full border border-nuit/15 bg-ivoire/60 px-4 py-2.5 text-base sm:text-xs text-nuit placeholder:text-gris focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/30"
+              suppressHydrationWarning
             />
           </div>
 
@@ -392,17 +392,24 @@ export function ChatWindow({
           </button>
         </form>
 
-        <div className="mt-2 flex items-center justify-between px-1 text-[10px] text-gris">
-          <span>Permanences : Lun 8h-20h • Sam 8h-14h</span>
-          <a
-            href={whatsappLink(siteMessages.general)}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            className="inline-flex items-center gap-1 font-medium text-sauge-fonce hover:underline"
-          >
-            <span>WhatsApp direct</span>
-            <ExternalLink size={10} aria-hidden="true" />
-          </a>
+        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-1.5 px-1 text-[10.5px]">
+          <div className="flex flex-wrap gap-1">
+            <button
+              type="button"
+              onClick={() => handleSendMessage("J'ai une ordonnance d'ophtalmologiste, comment m'orienter pour mes verres et obtenir une prise en charge mutuelle ?")}
+              className="rounded-full bg-champagne/15 px-2.5 py-0.5 text-champagne-fonce font-semibold hover:bg-champagne hover:text-nuit transition-colors"
+            >
+              📄 Mon ordonnance
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSendMessage("Comment fonctionne le tiers-payant avec mon assurance (Escoma, Zenith, WTW, Olea) ?")}
+              className="rounded-full bg-sauge-pale px-2.5 py-0.5 text-sauge-fonce font-semibold hover:bg-sauge-fonce hover:text-white transition-colors"
+            >
+              🛡️ Devis mutuelle
+            </button>
+          </div>
+          <span className="text-[10px] text-gris">Lun 8h-20h &bull; Sam 8h-14h</span>
         </div>
       </footer>
     </div>

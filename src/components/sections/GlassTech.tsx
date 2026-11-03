@@ -16,6 +16,7 @@ import {
 } from "../OpticalIllustrations";
 import { Reveal } from "../Reveal";
 import { WhatsAppLink } from "../WhatsAppLink";
+import { VisionSimulatorInteractive } from "../VisionSimulatorInteractive";
 import {
   Sparkles,
   Monitor,
@@ -277,6 +278,11 @@ export function GlassTech() {
             </div>
           </div>
         )}
+
+        {/* SIMULATEUR INTERACTIF DE VISION & RÉFRACTION OPTIQUE */}
+        <Reveal delay={0.1} className="mt-10 sm:mt-12">
+          <VisionSimulatorInteractive />
+        </Reveal>
 
         {/* Bannière d'accompagnement sur ordonnance */}
         <Reveal delay={0.15} className="mt-10 sm:mt-12">

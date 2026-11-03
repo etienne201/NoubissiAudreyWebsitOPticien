@@ -23,6 +23,7 @@ import { site } from "@/config/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import { openOpticalAssistant } from "../Chatbot/ChatbotWidget";
 import { OpenBadge } from "../OpenBadge";
+import { OpticalCosmosBackground } from "../OpticalCosmosBackground";
 
 type IntentKey = "glasses" | "sun" | "morpho" | "insurance";
 type LensPreviewMode = "antireflet" | "bluelight" | "polar";
@@ -166,14 +167,17 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="optical-meniscus-divider relative overflow-hidden bg-nuit text-ivoire pt-24 pb-16 sm:pt-28 lg:pt-32 lg:pb-24"
     >
+      {/* Simulation vivante de réfraction d'ondes optiques et caustiques lumineuses */}
+      <OpticalCosmosBackground scene="hero" tone="dark" interactive={true} className="opacity-80" />
+
       {/* Texture d'ambiance laboratoire et halos optiques de prestige */}
       <div
         aria-hidden="true"
-        className="bg-optical-grid-dark pointer-events-none absolute inset-0 opacity-45"
+        className="bg-optical-grid-dark pointer-events-none absolute inset-0 opacity-40"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(201,169,110,0.16),transparent_70%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(201,169,110,0.18),transparent_70%)]"
       />
       <div
         aria-hidden="true"

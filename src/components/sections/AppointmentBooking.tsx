@@ -135,6 +135,7 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
                   onChange={(e) => setClientName(e.target.value)}
                   placeholder="Ex : Danielle, Marc..."
                   className="mt-1.5 w-full rounded-2xl border border-nuit/15 bg-ivoire/30 px-4 py-2.5 text-base sm:text-sm text-nuit placeholder:text-gris focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/20"
+                  suppressHydrationWarning
                 />
               </div>
 
@@ -183,6 +184,7 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
                   value={preferredSlot}
                   onChange={(e) => setPreferredSlot(e.target.value)}
                   className="mt-1.5 w-full rounded-2xl border border-nuit/15 bg-ivoire/30 px-4 py-2.5 text-base sm:text-sm text-nuit focus:border-champagne focus:bg-white focus:outline-none focus:ring-2 focus:ring-champagne/20"
+                  suppressHydrationWarning
                 >
                   {slots.map((s) => (
                     <option key={s} value={s}>
@@ -200,6 +202,7 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
                   checked={hasPrescription}
                   onChange={(e) => setHasPrescription(e.target.checked)}
                   className="h-4 w-4 rounded border-nuit/30 text-champagne focus:ring-champagne"
+                  suppressHydrationWarning
                 />
                 <label
                   htmlFor="prescription-check"

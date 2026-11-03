@@ -11,6 +11,7 @@ import { Insurance } from "@/components/sections/Insurance";
 import { OpticalDiagnostic } from "@/components/sections/OpticalDiagnostic";
 import { Services } from "@/components/sections/Services";
 import { Why } from "@/components/sections/Why";
+import { OpticalScrollGauge } from "@/components/OpticalScrollGauge";
 import { faqList, schedule, site } from "@/config/site";
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -83,6 +84,7 @@ export default function HomePage() {
         }}
       />
       <Hero />
+      <OpticalScrollGauge />
       <OpticalDiagnostic />
       <Gallery />
       <GlassTech />
