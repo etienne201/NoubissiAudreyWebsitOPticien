@@ -2,10 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { MessageCircle, Sparkles, X } from "lucide-react";
 import { site, messages as siteMessages } from "@/config/site";
 import { whatsappLink } from "@/lib/whatsapp";
-import { ChatWindow } from "./ChatWindow";
+
+const ChatWindow = dynamic(
+  () => import("./ChatWindow").then((m) => m.ChatWindow),
+  { ssr: false }
+);
 
 export type OpenChatEventDetail = {
   message?: string;
@@ -128,12 +133,14 @@ export function ChatbotWidget() {
   return (
     <aside aria-label="Assistant virtuel et assistance WhatsApp" className="fixed bottom-4 right-4 z-40 md:bottom-6 md:right-6">
       {/* Fenêtre de conversation */}
-      <ChatWindow
-        isOpen={isOpen}
-        onClose={handleCloseChat}
-        externalPrompt={externalPrompt}
-        onExternalPromptConsumed={() => setExternalPrompt(null)}
-      />
+      {(isOpen || externalPrompt) && (
+        <ChatWindow
+          isOpen={isOpen}
+          onClose={handleCloseChat}
+          externalPrompt={externalPrompt}
+          onExternalPromptConsumed={() => setExternalPrompt(null)}
+        />
+      )}
 
       {/* Bulle d'invitation proactive / Tooltip d'accueil (discrète, sans conflit avec la bannière PWA ni le menu) */}
       {showTooltip && !isOpen && !isMenuOpen && !isPwaBannerVisible && (

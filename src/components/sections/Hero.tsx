@@ -384,6 +384,8 @@ export function Hero() {
                   alt="Portrait officiel d'Audrey Noubissi, opticienne-lunetière dans son atelier à Douala"
                   fill
                   priority
+                  fetchPriority="high"
+                  quality={85}
                   sizes="(min-width: 1024px) 44vw, 92vw"
                   className="object-cover object-top transition-transform duration-700 hover:scale-105"
                 />

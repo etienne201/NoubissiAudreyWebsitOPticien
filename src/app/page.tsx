@@ -28,7 +28,7 @@ const jsonLd = {
       url: site.url,
       telephone: site.phoneE164,
       priceRange: "$$",
-      image: `${site.url}/images/audrey-portrait.jpg`,
+      image: `${site.url}/images/audrey-portrait.webp`,
       address: {
         "@type": "PostalAddress",
         ...(site.address ? { streetAddress: site.address } : {}),

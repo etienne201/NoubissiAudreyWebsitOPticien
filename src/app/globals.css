@@ -119,17 +119,15 @@ body {
   display: none;
 }
 
-/* Moment signature : la mise au point du titre (optimisée LCP & confort rétinien) */
+/* Moment signature : la mise au point du titre (optimisée LCP & confort rétinien sans kernel blur lourd) */
 @keyframes mise-au-point {
   from {
-    filter: blur(4px);
-    opacity: 0.72;
-    transform: translateY(4px) scale(1.005);
+    opacity: 0.85;
+    transform: translateY(4px);
   }
   to {
-    filter: blur(0);
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 

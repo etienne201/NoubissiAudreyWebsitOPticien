@@ -44,45 +44,45 @@ const OPTICAL_INSTRUMENTS: {
 function Card({ s, tone, badge }: { s: Service; tone: "light" | "pale"; badge?: string }) {
   return (
     <article
-      className={`optical-card-hover group flex h-full flex-col justify-between rounded-3xl p-5 sm:p-6 transition-all duration-300 ${
+      className={`optical-card-hover group flex h-full flex-col justify-between rounded-2xl p-4 sm:p-4.5 transition-all duration-300 ${
         tone === "light"
-          ? "bg-white ring-1 ring-nuit/10 hover:shadow-lg hover:ring-sauge-fonce/35"
-          : "bg-white ring-1 ring-sauge-fonce/20 hover:shadow-lg hover:ring-champagne/50"
+          ? "bg-white ring-1 ring-nuit/10 hover:shadow-md hover:ring-sauge-fonce/35"
+          : "bg-white ring-1 ring-sauge-fonce/20 hover:shadow-md hover:ring-champagne/50"
       }`}
     >
       <div>
         <div className="flex items-center justify-between">
           <span
-            className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-300 ${
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 ${
               tone === "light"
                 ? "icon-badge-sage text-sauge-fonce group-hover:bg-sauge-fonce group-hover:text-white"
                 : "icon-badge-gold text-champagne-fonce group-hover:bg-champagne group-hover:text-nuit"
             }`}
           >
-            <ServiceIcon name={s.icon} size={22} />
+            <ServiceIcon name={s.icon} size={19} />
           </span>
           {badge && (
-            <span className="rounded-full bg-ivoire px-2.5 py-0.5 text-[0.68rem] font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-nuit/5">
+            <span className="rounded-full bg-ivoire px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-nuit/5">
               {badge}
             </span>
           )}
         </div>
-        <h4 className="mt-5 font-serif text-xl font-medium text-nuit group-hover:text-sauge-fonce transition-colors">
+        <h4 className="mt-3.5 font-serif text-lg font-medium text-nuit group-hover:text-sauge-fonce transition-colors">
           {s.title}
         </h4>
-        <p className="mt-2 text-sm leading-relaxed text-gris-fonce">{s.description}</p>
+        <p className="mt-1.5 text-xs sm:text-[13px] leading-relaxed text-gris-fonce">{s.description}</p>
       </div>
 
-      <div className="mt-6 border-t border-nuit/5 pt-4">
+      <div className="mt-4 border-t border-nuit/5 pt-3">
         <WhatsAppLink
           message={s.message}
           variant="ghost"
-          className="w-full justify-between p-0 text-xs sm:text-sm font-semibold text-sauge-fonce group-hover:text-champagne-fonce transition-colors"
+          className="w-full justify-between p-0 text-xs font-semibold text-sauge-fonce group-hover:text-champagne-fonce transition-colors"
           ariaLabel={s.cta}
         >
           <span>{s.cta}</span>
           <ArrowRight
-            size={15}
+            size={14}
             aria-hidden="true"
             className="transition-transform duration-200 group-hover:translate-x-1"
           />

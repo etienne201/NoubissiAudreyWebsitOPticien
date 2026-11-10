@@ -13,7 +13,7 @@ export function OpticalBackground({
   variant = "consultation",
   tone = "light",
   className = "",
-  withCanvas = true,
+  withCanvas = false,
 }: {
   variant?: OpticalBgVariant;
   tone?: "light" | "dark";

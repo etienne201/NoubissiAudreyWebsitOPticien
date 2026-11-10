@@ -82,49 +82,49 @@ export function HowItWorks() {
           </div>
         </Reveal>
 
-        <div className="mt-10 sm:mt-12 grid gap-5 sm:gap-6 md:grid-cols-3">
+        <div className="mt-8 sm:mt-10 grid gap-4 sm:gap-5 md:grid-cols-3">
           {steps.map((item, index) => {
             const meta = stepMeta[index] ?? stepMeta[0];
             const Icon = meta.icon;
             return (
               <Reveal key={item.step} delay={index * 0.08} className="h-full">
-                <div className="optical-card-hover group relative flex h-full flex-col justify-between rounded-3xl bg-white p-6 sm:p-7 shadow-sm ring-1 ring-nuit/8 hover:ring-champagne/60">
+                <div className="optical-card-hover group relative flex h-full flex-col justify-between rounded-2xl bg-white p-4 sm:p-5 shadow-2xs ring-1 ring-nuit/8 hover:ring-champagne/60 transition-all duration-200">
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2.5">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-nuit font-serif text-lg font-semibold text-champagne shadow-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-nuit font-serif text-base font-semibold text-champagne shadow-xs">
                           {item.step}
                         </span>
-                        <span className="rounded-full bg-sauge-pale/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-sauge-fonce">
+                        <span className="rounded-full bg-sauge-pale/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sauge-fonce">
                           {meta.badge}
                         </span>
                       </div>
-                      <span className="icon-badge-sage inline-flex h-11 w-11 items-center justify-center rounded-2xl text-sauge-fonce transition-transform duration-300 group-hover:scale-105">
-                        <Icon size={19} aria-hidden="true" />
+                      <span className="icon-badge-sage inline-flex h-9 w-9 items-center justify-center rounded-xl text-sauge-fonce transition-transform duration-200 group-hover:scale-105">
+                        <Icon size={17} aria-hidden="true" />
                       </span>
                     </div>
 
                     {/* Schéma technique illustrant l'étape de fabrication / conseil */}
-                    <div className="mt-4 flex items-center justify-center rounded-2xl bg-ivoire/70 py-2.5 ring-1 ring-nuit/5">
+                    <div className="mt-3 flex items-center justify-center rounded-xl bg-ivoire/70 py-1.5 ring-1 ring-nuit/5">
                       <WorkshopStepIllustration stepType={meta.stepType} />
                     </div>
 
-                    <h3 className="mt-4 sm:mt-5 font-serif text-xl font-medium text-nuit sm:text-2xl">
+                    <h3 className="mt-3 font-serif text-lg font-medium text-nuit sm:text-xl">
                       {item.title}
                     </h3>
-                    <p className="mt-2.5 text-sm sm:text-[0.95rem] leading-relaxed text-gris-fonce">
+                    <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-gris-fonce">
                       {item.text}
                     </p>
                   </div>
 
-                  <div className="mt-6 border-t border-nuit/8 pt-4">
+                  <div className="mt-4 border-t border-nuit/8 pt-3">
                     <Link
                       href={meta.actionHref}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-sauge-fonce transition-colors group-hover:text-champagne-fonce"
                     >
                       <span>{meta.actionLabel}</span>
                       <ArrowRight
-                        size={14}
+                        size={13}
                         className="transition-transform group-hover:translate-x-1"
                         aria-hidden="true"
                       />
@@ -136,8 +136,8 @@ export function HowItWorks() {
           })}
         </div>
 
-        <Reveal delay={0.2} className="mt-8 sm:mt-10">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-3xl bg-white p-5 sm:p-7 shadow-xs ring-1 ring-nuit/8 sm:flex-row sm:items-center">
+        <Reveal delay={0.2} className="mt-6 sm:mt-8">
+          <div className="flex flex-col items-start justify-between gap-4 rounded-2xl bg-white p-4 sm:p-5 shadow-2xs ring-1 ring-nuit/8 sm:flex-row sm:items-center">
             <div className="flex items-start gap-3.5">
               <span className="icon-badge-gold mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-champagne-fonce">
                 <FileText size={20} aria-hidden="true" />

@@ -42,6 +42,8 @@ export function OpticalCosmosBackground({
     if (!ctx) return;
 
     let animationFrameId: number;
+    let isRunning = false;
+    let startTimer: ReturnType<typeof setTimeout> | undefined;
     let isVisible = true;
     let width = 0;
     let height = 0;
@@ -85,7 +87,12 @@ export function OpticalCosmosBackground({
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const wasVisible = isVisible;
           isVisible = entry.isIntersecting;
+          if (!wasVisible && isVisible && isRunning) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = requestAnimationFrame(draw);
+          }
         });
       },
       { threshold: 0.05 }
@@ -110,7 +117,6 @@ export function OpticalCosmosBackground({
 
     const draw = () => {
       if (!isVisible) {
-        animationFrameId = requestAnimationFrame(draw);
         return;
       }
 
@@ -214,14 +220,46 @@ export function OpticalCosmosBackground({
       }
       ctx.restore();
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && isRunning && isVisible) {
         animationFrameId = requestAnimationFrame(draw);
       }
     };
 
+    // Premier rendu statique immédiat sans bloquer le thread principal
     draw();
 
+    // Démarre l'animation continue uniquement après la stabilisation visuelle du navigateur
+    if (!prefersReducedMotion) {
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        const idleId = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
+          () => {
+            isRunning = true;
+            if (isVisible) {
+              animationFrameId = requestAnimationFrame(draw);
+            }
+          },
+          { timeout: 2500 }
+        );
+        startTimer = idleId as unknown as ReturnType<typeof setTimeout>;
+      } else {
+        startTimer = setTimeout(() => {
+          isRunning = true;
+          if (isVisible) {
+            animationFrameId = requestAnimationFrame(draw);
+          }
+        }, 1500);
+      }
+    }
+
     return () => {
+      isRunning = false;
+      if (startTimer) {
+        if (typeof window !== "undefined" && "cancelIdleCallback" in window) {
+          (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(startTimer as unknown as number);
+        } else {
+          clearTimeout(startTimer);
+        }
+      }
       cancelAnimationFrame(animationFrameId);
       if (interactive) {
         window.removeEventListener("mousemove", handleMouseMove);

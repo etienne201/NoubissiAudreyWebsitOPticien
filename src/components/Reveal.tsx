@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 export type RevealVariant = "slide" | "focus" | "zoom";
 
 /**
- * Apparition cinématique au défilement inspirée de la mise au point optique
- * (respecte strictement prefers-reduced-motion).
+ * Apparition cinématique au défilement optimisée Core Web Vitals (zéro dépendance externe).
+ * Utilise IntersectionObserver natif et des transitions CSS GPU-accélérées.
+ * Respecte strictement prefers-reduced-motion.
  */
 export function Reveal({
   children,
@@ -20,41 +20,83 @@ export function Reveal({
   className?: string;
   variant?: RevealVariant;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  if (shouldReduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
+  useEffect(() => {
+    // Respect strict de la préférence de réduction de mouvement
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
 
-  const variants = {
-    slide: {
-      initial: { opacity: 0, y: 14 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] },
-    },
-    focus: {
-      initial: { opacity: 0, filter: "blur(6px)", scale: 0.985 },
-      animate: { opacity: 1, filter: "blur(0px)", scale: 1 },
-      transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
-    },
-    zoom: {
-      initial: { opacity: 0, scale: 0.95 },
-      animate: { opacity: 1, scale: 1 },
-      transition: { duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] },
-    },
+    const node = ref.current;
+    if (!node) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(node);
+        }
+      },
+      { rootMargin: "80px 0px", threshold: 0.05 }
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const getStyle = (): CSSProperties => {
+    const baseTransition = `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, filter 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`;
+
+    if (isVisible) {
+      return {
+        opacity: 1,
+        transform: "none",
+        filter: "none",
+        transition: baseTransition,
+      };
+    }
+
+    switch (variant) {
+      case "focus":
+        return {
+          opacity: 0,
+          filter: "blur(6px)",
+          transform: "scale(0.985)",
+          transition: baseTransition,
+          willChange: "opacity, filter, transform",
+        };
+      case "zoom":
+        return {
+          opacity: 0,
+          transform: "scale(0.95)",
+          transition: baseTransition,
+          willChange: "opacity, transform",
+        };
+      case "slide":
+      default:
+        return {
+          opacity: 0,
+          transform: "translateY(14px)",
+          transition: baseTransition,
+          willChange: "opacity, transform",
+        };
+    }
   };
 
-  const selected = variants[variant] || variants.slide;
-
   return (
-    <motion.div
-      className={className}
-      initial={selected.initial}
-      whileInView={selected.animate}
-      viewport={{ once: true, amount: 0.08 }}
-      transition={selected.transition}
-    >
+    <div ref={ref} className={className} style={getStyle()}>
       {children}
-    </motion.div>
+    </div>
   );
 }

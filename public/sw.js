@@ -1,4 +1,4 @@
-const CACHE_NAME = "audrey-optique-v4";
+const CACHE_NAME = "audrey-optique-v5";
 const STATIC_ASSETS = [
   "/",
   "/offline",
@@ -9,9 +9,10 @@ const STATIC_ASSETS = [
   "/icons/maskable-512.png",
   "/brand/logo-horizontal-light.svg",
   "/brand/logo-compact.svg",
-  "/images/audrey-portrait.jpg",
-  "/images/monture-acetate.jpg",
-  "/images/monture-solaire.jpg",
+  "/images/audrey-portrait.webp",
+  "/images/monture-acetate.webp",
+  "/images/monture-solaire.webp",
+  "/images/monture-reels-3d.webp",
   "/mentions-legales",
   "/confidentialite",
 ];
@@ -19,7 +20,7 @@ const STATIC_ASSETS = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // Pré-mise en cache résiliente en arrière-plan : un actif lent ne bloque pas tout le Service Worker
+      // Pré-mise en cache résiliente en arrière-plan : un actif lent ne bloque pas l'installation
       return Promise.allSettled(
         STATIC_ASSETS.map((url) =>
           cache.add(url).catch(() => {
@@ -47,18 +48,33 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// Écoute des messages pour mise à jour transparente
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
 
-  // Ignore non-GET requests or external API calls (e.g. WhatsApp, POST /api/chat)
+  // Ignorer les requêtes non-GET ou externes (WhatsApp, API externes, Analytics)
   if (request.method !== "GET" || !request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  // Fonts & static assets / images: Cache-First with background refresh
+  // Ne pas cacher les appels API dynamiques
+  if (request.url.includes("/api/")) {
+    return;
+  }
+
+  // Chunks Next.js (JS/CSS), polices, icônes et images : Cache-First avec rafraîchissement
   if (
+    request.destination === "style" ||
+    request.destination === "script" ||
     request.destination === "font" ||
     request.destination === "image" ||
+    request.url.includes("/_next/static/") ||
     request.url.includes("/fonts/") ||
     request.url.includes("/icons/") ||
     request.url.includes("/brand/") ||
@@ -69,7 +85,7 @@ self.addEventListener("fetch", (event) => {
         if (cached) return cached;
         return fetch(request)
           .then((response) => {
-            if (response.status === 200) {
+            if (response && response.status === 200) {
               const clone = response.clone();
               caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
             }
@@ -81,13 +97,15 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // HTML Pages: Network First with offline fallback
+  // Navigation HTML : Network First avec repli offline garanti
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          }
           return response;
         })
         .catch(() =>

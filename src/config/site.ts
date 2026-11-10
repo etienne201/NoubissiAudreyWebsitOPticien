@@ -27,7 +27,7 @@ export const site = {
   /** Lien Google Maps (facultatif). */
   mapsUrl: "",
   /** Portrait officiel d'Audrey dans son showroom atelier à Douala */
-  portrait: "/images/audrey-portrait.jpg",
+  portrait: "/images/audrey-portrait.webp",
   /** Réseaux existants */
   socials: {
     facebook: "",
@@ -479,7 +479,7 @@ export type GalleryPhoto = {
 export const galleryPhotos: GalleryPhoto[] = [
   {
     id: "acetate-ecaille",
-    src: "/images/monture-acetate.jpg",
+    src: "/images/monture-acetate.webp",
     alt: "Monture haut de gamme en acétate écaille artisanale et branches titane champagne",
     width: 1200,
     height: 900,
@@ -512,7 +512,7 @@ export const galleryPhotos: GalleryPhoto[] = [
   },
   {
     id: "solaire-riviera",
-    src: "/images/monture-solaire.jpg",
+    src: "/images/monture-solaire.webp",
     alt: "Lunettes de soleil solaires polarisées double pont haute protection UV400",
     width: 1200,
     height: 900,
@@ -545,7 +545,7 @@ export const galleryPhotos: GalleryPhoto[] = [
   },
   {
     id: "atelier-visagisme",
-    src: "/images/audrey-portrait.jpg",
+    src: "/images/audrey-portrait.webp",
     alt: "Audrey Noubissi dans son atelier d'optique à Douala",
     width: 1200,
     height: 900,
@@ -578,7 +578,7 @@ export const galleryPhotos: GalleryPhoto[] = [
   },
   {
     id: "papillon-couture",
-    src: "/images/monture-acetate.jpg",
+    src: "/images/monture-acetate.webp",
     alt: "Monture papillon architecturale sculptée haute couture",
     width: 1200,
     height: 900,
@@ -611,7 +611,7 @@ export const galleryPhotos: GalleryPhoto[] = [
   },
   {
     id: "carbone-onyx-solaire",
-    src: "/images/monture-solaire.jpg",
+    src: "/images/monture-solaire.webp",
     alt: "Lunettes de soleil profilées en fibre de carbone et verres polarisés haute performance",
     width: 1200,
     height: 900,
@@ -644,7 +644,7 @@ export const galleryPhotos: GalleryPhoto[] = [
   },
   {
     id: "geometrique-titane-or",
-    src: "/images/monture-acetate.jpg",
+    src: "/images/monture-acetate.webp",
     alt: "Monture géométrique fine en titane japonais cannelé et anneau acétate or",
     width: 1200,
     height: 900,
