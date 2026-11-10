@@ -4,12 +4,12 @@ import { insuranceMessage, messages, products, prestations, site } from "@/confi
 
 describe("whatsappLink", () => {
   it("pointe vers le bon numéro sans message", () => {
-    expect(whatsappLink()).toBe("https://wa.me/237657268355");
+    expect(whatsappLink()).toBe("https://wa.me/237677165566");
   });
 
   it("encode correctement le message (accents, apostrophes, ponctuation)", () => {
     const url = whatsappLink(messages.general);
-    expect(url.startsWith("https://wa.me/237657268355?text=")).toBe(true);
+    expect(url.startsWith("https://wa.me/237677165566?text=")).toBe(true);
     const text = new URL(url).searchParams.get("text");
     expect(text).toBe(messages.general);
     expect(url).not.toContain(" ");
@@ -27,6 +27,6 @@ describe("whatsappLink", () => {
   });
 
   it("utilise le numéro de la configuration", () => {
-    expect(site.whatsappNumber).toBe("237657268355");
+    expect(site.whatsappNumber).toBe("237677165566");
   });
 });

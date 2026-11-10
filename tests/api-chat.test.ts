@@ -42,7 +42,7 @@ describe("Route API /api/chat", () => {
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.whatsappCta).toBeDefined();
-    expect(data.whatsappCta?.url).toContain("https://wa.me/237657268355");
+    expect(data.whatsappCta?.url).toContain("https://wa.me/237677165566");
   });
 
   it("détecte une urgence ophtalmologique absolue et renvoie l'alerte médicale", async () => {

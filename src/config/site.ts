@@ -18,9 +18,9 @@ export const site = {
   country: "CM",
   countryLabel: "Cameroun",
   /** Numéro au format international, sans « + » ni espaces (format wa.me). */
-  whatsappNumber: "237657268355",
-  phoneDisplay: "+237 657 268 355",
-  phoneE164: "+237657268355",
+  whatsappNumber: "237677165566",
+  phoneDisplay: "+237 677 165 566",
+  phoneE164: "+237677165566",
   timezone: "Africa/Douala",
   /** À renseigner dès que l'adresse physique exacte est confirmée. */
   address: "",
