@@ -81,6 +81,7 @@ export const messages = {
 
 export const nav = [
   { href: "/#accueil", label: "Accueil" },
+  { href: "/#recit-vision", label: "Récit Vision" },
   { href: "/#diagnostic", label: "Diagnostic Conseil" },
   { href: "/#collections", label: "Montures" },
   { href: "/#technologies", label: "Laboratoire Verres" },

@@ -303,40 +303,38 @@ export function Gallery() {
     <section
       id="collections"
       aria-labelledby="gallery-title"
-      className="optical-meniscus-divider relative overflow-hidden bg-nuit bg-optical-grid-dark py-16 text-ivoire sm:py-20 md:py-28"
+      className="optical-meniscus-divider relative overflow-hidden bg-nuit bg-optical-grid-dark py-12 sm:py-14 lg:py-16 text-ivoire"
     >
       <OpticalBackground variant="catalog" tone="dark" />
 
       <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">
-        {/* En-tête de section Premium avec badge d'atelier */}
+        {/* En-tête de section Premium avec badge d'atelier centré */}
         <Reveal>
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div>
-              <div className="flex flex-wrap items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-champagne/40 bg-champagne/15 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-champagne backdrop-blur-md shadow-xs">
-                  <Sparkles size={14} aria-hidden="true" /> Showroom &amp; Comparateur d&apos;Atelier
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-sauge/30 bg-sauge/10 px-3 py-1 text-xs font-medium text-sauge-pale backdrop-blur-md">
-                  <span className="h-1.5 w-1.5 rounded-full bg-sauge animate-ping" />
-                  Précision 0.1 mm à Douala
-                </span>
-              </div>
-
-              <h2
-                id="gallery-title"
-                className="mt-3.5 font-serif text-fluid-h2 font-medium text-ivoire tracking-tight"
-              >
-                Découvrir et comparer nos montures selon vos critères
-              </h2>
-
-              <p className="mt-3 sm:mt-4 max-w-2xl text-fluid-lead text-ivoire/80">
-                Chaque monture réunit géométrie faciale, confort de pont nasal et compatibilité
-                millimétrique avec votre correction. Ajustez vos filtres d&apos;opticienne et comparez
-                nos modèles signatures en un coup d&apos;œil.
-              </p>
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-champagne/40 bg-champagne/15 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-champagne backdrop-blur-md shadow-xs">
+                <Sparkles size={14} aria-hidden="true" /> Showroom &amp; Comparateur d&apos;Atelier
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sauge/30 bg-sauge/10 px-3 py-1 text-xs font-medium text-sauge-pale backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-sauge animate-ping" />
+                Précision 0.1 mm à Douala
+              </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 self-start lg:self-auto shrink-0">
+            <h2
+              id="gallery-title"
+              className="mt-3.5 font-serif text-fluid-h2 font-medium text-ivoire tracking-tight"
+            >
+              Découvrir et comparer nos montures selon vos critères
+            </h2>
+
+            <p className="mt-3 sm:mt-4 mx-auto max-w-2xl text-fluid-lead text-ivoire/80">
+              Chaque monture réunit géométrie faciale, confort de pont nasal et compatibilité
+              millimétrique avec votre correction. Ajustez vos filtres d&apos;opticienne et comparez
+              nos modèles signatures en un coup d&apos;œil.
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
               <button
                 type="button"
                 onClick={() => setIsWizardOpen(!isWizardOpen)}
@@ -356,7 +354,7 @@ export function Gallery() {
                 <span>{showDimensionGuide ? "Masquer le guide" : "Comprendre les 3 chiffres"}</span>
               </button>
 
-              <WhatsAppLink message={messages.buy} variant="gold" className="shrink-0">
+              <WhatsAppLink message={messages.buy} variant="gold">
                 <span>Catalogue &amp; Conciergerie</span>
                 <ArrowRight size={16} aria-hidden="true" />
               </WhatsAppLink>

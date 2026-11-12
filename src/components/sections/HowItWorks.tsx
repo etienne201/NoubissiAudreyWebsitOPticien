@@ -51,34 +51,34 @@ export function HowItWorks() {
       className="relative overflow-hidden bg-ivoire-fonce/45 bg-optical-grid border-y border-nuit/5"
     >
       <OpticalBackground variant="workshop" tone="light" />
-      <div className="relative z-10 mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-28">
+      <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8 pt-12 pb-10 sm:pt-14 sm:pb-12 lg:pt-16 lg:pb-14">
         <Reveal>
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
-                <Sparkles size={13} aria-hidden="true" /> Parcours Simple &amp; Transparent
-              </span>
-              <h2
-                id="steps-title"
-                className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
-              >
-                Comment se déroule votre accompagnement optique ?
-              </h2>
-              <p className="mt-3 text-fluid-lead text-gris-fonce">
-                Pas de démarche complexe : de la lecture de votre ordonnance jusqu&apos;à
-                l&apos;ajustage final sur votre visage à Douala, chaque étape est guidée avec
-                clarté.
-              </p>
-            </div>
-
-            <Link
-              href="/conseils"
-              className="inline-flex items-center gap-2 self-start rounded-full border border-nuit/15 bg-white px-4 py-2.5 text-xs font-semibold text-nuit shadow-2xs transition-colors hover:border-nuit hover:bg-nuit hover:text-ivoire lg:self-auto"
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
+              <Sparkles size={13} aria-hidden="true" /> Parcours Simple &amp; Transparent
+            </span>
+            <h2
+              id="steps-title"
+              className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
             >
-              <BookOpen size={14} className="text-champagne-fonce" aria-hidden="true" />
-              <span>Guide : comprendre mon ordonnance</span>
-              <ArrowRight size={13} aria-hidden="true" />
-            </Link>
+              Comment se déroule votre accompagnement optique ?
+            </h2>
+            <p className="mt-3 text-fluid-lead text-gris-fonce mx-auto max-w-2xl">
+              Pas de démarche complexe : de la lecture de votre ordonnance jusqu&apos;à
+              l&apos;ajustage final sur votre visage à Douala, chaque étape est guidée avec
+              clarté.
+            </p>
+
+            <div className="mt-5 flex justify-center">
+              <Link
+                href="/conseils"
+                className="inline-flex items-center gap-2 rounded-full border border-nuit/15 bg-white px-4 py-2.5 text-xs font-semibold text-nuit shadow-2xs transition-colors hover:border-nuit hover:bg-nuit hover:text-ivoire"
+              >
+                <BookOpen size={14} className="text-champagne-fonce" aria-hidden="true" />
+                <span>Guide : comprendre mon ordonnance</span>
+                <ArrowRight size={13} aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </Reveal>
 

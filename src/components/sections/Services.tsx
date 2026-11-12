@@ -5,6 +5,7 @@ import {
   type OpticalEquipmentType,
 } from "../OpticalIllustrations";
 import { Reveal } from "../Reveal";
+import { TextReveal } from "../TextReveal";
 import { ServiceIcon } from "../ServiceIcon";
 import { WhatsAppLink } from "../WhatsAppLink";
 import { ArrowRight, Sparkles, Wrench } from "lucide-react";
@@ -44,7 +45,7 @@ const OPTICAL_INSTRUMENTS: {
 function Card({ s, tone, badge }: { s: Service; tone: "light" | "pale"; badge?: string }) {
   return (
     <article
-      className={`optical-card-hover group flex h-full flex-col justify-between rounded-2xl p-4 sm:p-4.5 transition-all duration-300 ${
+      className={`optical-card-hover group flex h-full flex-col justify-between rounded-2xl p-5 sm:p-6 transition-all duration-300 ${
         tone === "light"
           ? "bg-white ring-1 ring-nuit/10 hover:shadow-md hover:ring-sauge-fonce/35"
           : "bg-white ring-1 ring-sauge-fonce/20 hover:shadow-md hover:ring-champagne/50"
@@ -95,9 +96,9 @@ function Card({ s, tone, badge }: { s: Service; tone: "light" | "pale"; badge?: 
 export function Services() {
   return (
     <section id="services" aria-labelledby="services-title">
-      <div className="mx-auto max-w-page px-4 pb-14 pt-16 sm:px-6 sm:pt-20 lg:px-8 md:pt-28">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14">
         <Reveal>
-          <div className="max-w-2xl">
+          <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
               <Sparkles size={14} aria-hidden="true" /> Produits &amp; Équipements
             </span>
@@ -105,9 +106,13 @@ export function Services() {
               id="services-title"
               className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
             >
-              Des produits optiques sélectionnés avec exigence
+              <TextReveal
+                text="Des produits optiques sélectionnés avec exigence"
+                highlightWords={["optiques", "exigence"]}
+                as="span"
+              />
             </h2>
-            <p className="mt-3 text-fluid-lead text-gris-fonce">{productSalesNote}</p>
+            <p className="mt-3 text-fluid-lead text-gris-fonce mx-auto max-w-2xl">{productSalesNote}</p>
           </div>
         </Reveal>
 
@@ -122,16 +127,20 @@ export function Services() {
 
       <div className="relative overflow-hidden bg-sauge-pale/40 border-y border-nuit/5">
         <OpticalBackground variant="workshop" tone="light" />
-        <div className="relative z-10 mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-24">
+        <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14">
           <Reveal>
-            <div className="max-w-2xl">
+            <div className="mx-auto max-w-3xl text-center">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
                 <Wrench size={13.5} aria-hidden="true" /> Soin &amp; Précision
               </span>
               <h3 className="mt-3 font-serif text-fluid-h2 font-medium text-nuit">
-                Prestations &amp; Accompagnement en atelier
+                <TextReveal
+                  text="Prestations & Accompagnement en atelier"
+                  highlightWords={["Prestations", "Atelier"]}
+                  as="span"
+                />
               </h3>
-              <p className="mt-2.5 text-fluid-lead text-gris-fonce">
+              <p className="mt-2.5 text-fluid-lead text-gris-fonce mx-auto max-w-2xl">
                 Disponibles lors des permanences à Douala : Lundi (08h-20h) et Samedi (08h-14h).
               </p>
             </div>

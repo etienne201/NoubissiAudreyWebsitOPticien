@@ -3,6 +3,8 @@ import { site } from "@/config/site";
 import { LogoMark } from "../Logo";
 import { TechnicianFrameAdjustmentIllustration } from "../OpticalIllustrations";
 import { Reveal } from "../Reveal";
+import { TextReveal } from "../TextReveal";
+import { ParallaxContainer } from "../ParallaxContainer";
 import {
   Award,
   HeartHandshake,
@@ -17,11 +19,12 @@ export function About() {
     <section
       id="apropos"
       aria-labelledby="about-title"
-      className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-28"
+      className="relative w-full overflow-hidden pt-10 pb-12 sm:pt-12 sm:pb-14 lg:pt-14 lg:pb-16"
     >
-      <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal>
-          <div className="relative mx-auto max-w-md lg:max-w-none">
+          <ParallaxContainer offset={20} className="relative mx-auto max-w-md lg:max-w-none">
             <div className="relative overflow-hidden rounded-[2.25rem] sm:rounded-[2.5rem] bg-nuit shadow-2xl ring-1 ring-nuit/10">
               {site.portrait ? (
                 <div className="relative aspect-[4/5] w-full">
@@ -65,7 +68,7 @@ export function About() {
                 <p className="font-serif text-sm font-bold">BTS Optique-Lunetterie</p>
               </div>
             </div>
-          </div>
+          </ParallaxContainer>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -77,7 +80,11 @@ export function About() {
               id="about-title"
               className="mt-3 sm:mt-4 font-serif text-fluid-h2 font-medium text-nuit"
             >
-              Une vocation née de la transmission familiale et forgée sur le terrain
+              <TextReveal
+                text="Une vocation née de la transmission familiale et forgée sur le terrain"
+                highlightWords={["transmission", "terrain"]}
+                as="span"
+              />
             </h2>
             <div className="mt-5 sm:mt-6 space-y-4 text-sm sm:text-base leading-relaxed text-gris-fonce">
               <p>
@@ -164,6 +171,7 @@ export function About() {
             </div>
           </div>
         </Reveal>
+      </div>
       </div>
     </section>
   );

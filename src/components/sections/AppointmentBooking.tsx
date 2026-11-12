@@ -5,6 +5,7 @@ import { appointmentMotives, site } from "@/config/site";
 import { OpticalBackground } from "../OpticalBackground";
 import { PatientConsultationIllustration } from "../OpticalIllustrations";
 import { Reveal } from "../Reveal";
+import { TextReveal } from "../TextReveal";
 import {
   Clock,
   MessageSquare,
@@ -55,10 +56,11 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
     <section
       id="rendez-vous"
       aria-labelledby="booking-title"
-      className="relative overflow-hidden mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-28"
+      className="relative w-full overflow-hidden py-10 sm:py-12 lg:py-14"
     >
       <OpticalBackground variant="consultation" tone="light" />
-      <div className="relative z-10 grid gap-10 sm:gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 items-center">
+      <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 sm:gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 items-center">
         <Reveal>
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
@@ -68,7 +70,11 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
               id="booking-title"
               className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
             >
-              Planifiez votre échange ou votre passage
+              <TextReveal
+                text="Planifiez votre échange ou votre passage"
+                highlightWords={["échange", "passage"]}
+                as="span"
+              />
             </h2>
             <p className="mt-3 sm:mt-4 text-fluid-lead text-gris-fonce">
               Prenez rendez-vous en quelques clics pour un conseil personnalisé sans attente.
@@ -234,6 +240,7 @@ Pourriez-vous me confirmer vos disponibilités s'il vous plaît ?`;
             </form>
           </div>
         </Reveal>
+      </div>
       </div>
     </section>
   );

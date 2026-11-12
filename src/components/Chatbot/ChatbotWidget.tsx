@@ -72,13 +72,14 @@ export function ChatbotWidget() {
     };
   }, []);
 
-  // Affiche une invitation proactive après 10 secondes si l'utilisateur n'a pas encore cliqué
+  // Affiche une invitation proactive après 15 secondes uniquement sur écran large pour ne pas polluer le mobile
   useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth < 1024) return;
     const timer = setTimeout(() => {
       if (!hasInteracted && !isOpen) {
         setShowTooltip(true);
       }
-    }, 10000);
+    }, 15000);
 
     return () => clearTimeout(timer);
   }, [hasInteracted, isOpen]);

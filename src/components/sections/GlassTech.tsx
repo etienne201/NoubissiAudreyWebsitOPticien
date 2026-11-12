@@ -60,35 +60,33 @@ export function GlassTech() {
     <section
       id="technologies"
       aria-labelledby="glass-tech-title"
-      className="relative overflow-hidden bg-sauge-pale/35 bg-optical-grid py-12 sm:py-16 md:py-20"
+      className="relative overflow-hidden bg-sauge-pale/35 bg-optical-grid pt-12 pb-10 sm:pt-14 sm:pb-12 lg:pt-16 lg:pb-14"
     >
       <OpticalBackground variant="laboratory" tone="light" />
       <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-sauge-fonce/15 bg-white/90 backdrop-blur px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-sauge-fonce shadow-2xs">
-                <Sparkles size={12} className="text-champagne-fonce" aria-hidden="true" />
-                Laboratoire &amp; Guide Optique
-              </span>
-              <h2
-                id="glass-tech-title"
-                className="mt-2 font-serif text-fluid-h2 font-medium text-nuit tracking-tight"
-              >
-                Comprendre vos verres : géométries, traitements et indices
-              </h2>
-              <p className="mt-2 text-fluid-lead text-gris-fonce">
-                Un verre optique associe une géométrie (unifocal, bureau, progressif), un matériau
-                plus ou moins aminci et des traitements de surface. Découvrez leurs usages réels et
-                leurs limites expliqués simplement.
-              </p>
-            </div>
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-sauge-fonce/15 bg-white/90 backdrop-blur px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce shadow-2xs">
+              <Sparkles size={13} className="text-champagne-fonce" aria-hidden="true" />
+              Laboratoire &amp; Guide Optique
+            </span>
+            <h2
+              id="glass-tech-title"
+              className="mt-3 font-serif text-fluid-h2 font-medium text-nuit tracking-tight"
+            >
+              Comprendre vos verres : géométries, traitements et indices
+            </h2>
+            <p className="mt-3 text-fluid-lead text-gris-fonce mx-auto max-w-2xl">
+              Un verre optique associe une géométrie (unifocal, bureau, progressif), un matériau
+              plus ou moins aminci et des traitements de surface. Découvrez leurs usages réels et
+              leurs limites expliqués simplement.
+            </p>
 
-            {/* Navigation interne compacte style Segmented Control */}
+            {/* Navigation interne compacte style Segmented Control centrée */}
             <div
               role="tablist"
               aria-label="Catégories du laboratoire des verres"
-              className="no-scrollbar flex w-full overflow-x-auto gap-1 self-start rounded-2xl bg-white/95 p-1 shadow-2xs ring-1 ring-nuit/10 backdrop-blur-md sm:w-auto lg:self-auto shrink-0"
+              className="no-scrollbar mt-6 inline-flex max-w-full overflow-x-auto gap-1 rounded-2xl bg-white/95 p-1 shadow-2xs ring-1 ring-nuit/10 backdrop-blur-md shrink-0"
             >
               {tabs.map((tab) => {
                 const selected = activeTab === tab.id;
@@ -113,7 +111,7 @@ export function GlassTech() {
                     />
                     <span>{tab.label}</span>
                     <span
-                      className={`ml-0.5 rounded-full px-1.5 py-0.2 font-mono text-[10px] ${
+                      className={`ml-0.5 rounded-full px-1.5 py-0.5 font-mono text-[10px] ${
                         selected
                           ? "bg-white/20 text-ivoire font-bold"
                           : "bg-nuit/5 text-nuit/60"
@@ -130,7 +128,7 @@ export function GlassTech() {
 
         {/* VOLET 1 : TRAITEMENTS & FILTRES OPTIQUES - CADRE UNIQUE INTELLIGENT & CONSOLE HAUTE PRÉCISION */}
         {activeTab === "treatments" && (
-          <div className="mt-6 sm:mt-8 max-w-5xl mx-auto space-y-3.5 animate-in fade-in duration-300">
+          <div className="mt-8 sm:mt-10 lg:mt-12 max-w-5xl mx-auto space-y-4 animate-in fade-in duration-300">
             {/* Contrôle de mode : Console Active (1 cadre compact) vs Comparateur complet */}
             <div className="flex items-center justify-between gap-2 px-1">
               <span className="text-[11px] font-bold uppercase tracking-wider text-sauge-fonce flex items-center gap-1.5">

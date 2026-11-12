@@ -10,6 +10,7 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Insurance } from "@/components/sections/Insurance";
 import { OpticalDiagnostic } from "@/components/sections/OpticalDiagnostic";
 import { Services } from "@/components/sections/Services";
+import { VisionStorytelling } from "@/components/sections/VisionStorytelling";
 import { Why } from "@/components/sections/Why";
 import { OpticalScrollGauge } from "@/components/OpticalScrollGauge";
 import { faqList, schedule, site } from "@/config/site";
@@ -83,8 +84,9 @@ export default function HomePage() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <Hero />
       <OpticalScrollGauge />
+      <Hero />
+      <VisionStorytelling />
       <OpticalDiagnostic />
       <Gallery />
       <GlassTech />

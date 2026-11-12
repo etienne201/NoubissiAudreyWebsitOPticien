@@ -26,7 +26,7 @@ export function FaqSection() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="bg-ivoire-fonce/30 bg-optical-grid border-t border-nuit/5 py-16 sm:py-20 md:py-28"
+      className="bg-ivoire-fonce/30 bg-optical-grid border-t border-nuit/5 py-10 sm:py-12 lg:py-14"
     >
       <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-14">

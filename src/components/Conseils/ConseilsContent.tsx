@@ -208,7 +208,7 @@ export function ConseilsContent() {
       {/* ======================================================== */}
       {/* HERO BANNER PRESTIGE (Fond Bleu Nuit & Raccord Header)   */}
       {/* ======================================================== */}
-      <section className="optical-meniscus-divider relative overflow-hidden bg-nuit text-ivoire pt-24 pb-14 sm:pt-28 md:pt-36 md:pb-20">
+      <section className="optical-meniscus-divider relative overflow-hidden bg-nuit text-ivoire pt-24 pb-14 sm:pt-28 lg:pt-36 lg:pb-20">
         {/* Halos d'ambiance de luxe */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-nuit-doux/60 via-nuit to-nuit pointer-events-none" />
         <div className="absolute top-1/2 left-1/4 h-80 w-80 rounded-full bg-champagne/10 blur-[90px] pointer-events-none" />
@@ -302,7 +302,7 @@ export function ConseilsContent() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-page px-5 py-12 md:px-8 md:py-16">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16">
         {/* ======================================================== */}
         {/* GRILLE D'ARTICLES HAUTE DÉFINITION                       */}
         {/* ======================================================== */}

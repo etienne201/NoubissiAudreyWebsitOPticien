@@ -24,13 +24,13 @@ export default function OfflinePage() {
   return (
     <div className="min-h-screen bg-ivoire text-nuit">
       {/* Bandeau supérieur sombre raccord avec le Header fixe */}
-      <section className="optical-meniscus-divider relative overflow-hidden bg-nuit bg-optical-grid-dark pt-28 pb-14 text-center text-ivoire md:pt-36 md:pb-16">
-        <div className="mx-auto max-w-2xl px-5 md:px-8">
+      <section className="optical-meniscus-divider relative overflow-hidden bg-nuit bg-optical-grid-dark pt-24 pb-12 text-center text-ivoire sm:pt-28 lg:pt-32 lg:pb-14">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto flex h-18 w-18 items-center justify-center rounded-3xl border border-champagne/30 bg-champagne/15 text-champagne">
             {isOnline ? <Wifi size={32} aria-hidden="true" /> : <WifiOff size={32} aria-hidden="true" />}
           </div>
 
-          <h1 className="mt-5 font-serif text-3xl font-medium text-ivoire md:text-5xl">
+          <h1 className="mt-5 font-serif text-3xl font-medium text-ivoire sm:text-4xl lg:text-5xl">
             {isOnline ? "Connexion rétablie" : "Mode hors-ligne actif"}
           </h1>
 
@@ -42,7 +42,7 @@ export default function OfflinePage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-2xl px-5 py-12 md:px-8">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14">
         {/* Raccourci téléphonique d'urgence */}
         <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-nuit/10 text-left sm:p-8">
           <p className="text-xs font-bold uppercase tracking-wider text-sauge-fonce">

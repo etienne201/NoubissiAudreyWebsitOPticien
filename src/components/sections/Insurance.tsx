@@ -38,7 +38,7 @@ export function Insurance() {
     <section
       id="assurances"
       aria-labelledby="insurance-title"
-      className="relative overflow-hidden bg-sauge-pale/50 bg-optical-grid py-16 sm:py-20 md:py-28"
+      className="relative overflow-hidden bg-sauge-pale/50 bg-optical-grid py-10 sm:py-12 lg:py-14"
     >
       <OpticalBackground variant="consultation" tone="light" />
       <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">

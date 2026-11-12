@@ -24,6 +24,7 @@ import {
   MapPin,
   CheckCircle2,
   Home,
+  Eye,
   CornerDownLeft,
 } from "lucide-react";
 import Link from "next/link";
@@ -60,6 +61,17 @@ const SMART_MENU_ITEMS: SmartMenuItem[] = [
     category: "practical",
     keywords: ["accueil", "audrey", "douala", "présentation", "opticienne", "début"],
     icon: Home,
+    accent: "champagne",
+  },
+  {
+    id: "recit-vision",
+    href: "/#recit-vision",
+    label: "Récit & Storytelling de la Vision",
+    sub: "L'épopée de la clarté visuelle et de la santé oculaire",
+    badge: "Immersif",
+    category: "tools",
+    keywords: ["récit", "histoire", "vision", "storytelling", "flou", "netteté", "lumière", "douala"],
+    icon: Eye,
     accent: "champagne",
   },
   {
@@ -355,6 +367,7 @@ export function Header() {
 
     const sectionIds = [
       "accueil",
+      "recit-vision",
       "diagnostic",
       "collections",
       "technologies",

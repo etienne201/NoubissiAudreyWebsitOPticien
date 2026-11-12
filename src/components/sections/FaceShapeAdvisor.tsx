@@ -63,7 +63,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
   if (shapeId === "round") {
     if (frameType === "rectangle" || isRecommended) {
       return {
-        score: "Harmonie d'Or (9.8/10)",
+        score: "Harmonie Optimale",
         badgeClass: "bg-emerald-500/10 text-emerald-700 border-emerald-300 ring-emerald-500/20",
         analysis: "Les angles nets créent une rupture bienvenue avec la rondeur des joues et étirent le regard.",
         recommended: true,
@@ -77,7 +77,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
     }
     if (frameType === "round") {
       return {
-        score: "Effet d'accentuation (4.8/10)",
+        score: "Effet d'Accentuation",
         badgeClass: "bg-amber-500/10 text-amber-700 border-amber-300 ring-amber-500/20",
         analysis: "La superposition de deux cercles identiques enferme le regard et amplifie la rotondité des joues.",
         recommended: false,
@@ -91,7 +91,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
     }
     if (frameType === "cat-eye") {
       return {
-        score: "Harmonie Dynamique (8.8/10)",
+        score: "Harmonie Dynamique",
         badgeClass: "bg-emerald-500/10 text-emerald-700 border-emerald-300 ring-emerald-500/20",
         analysis: "L'élévation vers les tempes lifte le regard vers le haut et structure les pommettes.",
         recommended: true,
@@ -108,7 +108,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
   if (shapeId === "square") {
     if (frameType === "round" || frameType === "pantos" || isRecommended) {
       return {
-        score: "Adoucissement Idéal (9.9/10)",
+        score: "Adoucissement Idéal",
         badgeClass: "bg-emerald-500/10 text-emerald-700 border-emerald-300 ring-emerald-500/20",
         analysis: "Les courbes galbées adoucissent l'angle de la mâchoire et rééquilibrent la stature faciale.",
         recommended: true,
@@ -122,7 +122,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
     }
     if (frameType === "rectangle") {
       return {
-        score: "Sévérité des Lignes (5.2/10)",
+        score: "Lignes Prononcées",
         badgeClass: "bg-amber-500/10 text-amber-700 border-amber-300 ring-amber-500/20",
         analysis: "Renforce la sévérité du menton et de la ligne frontale. À réserver si vous cherchez un look très autoritaire.",
         recommended: false,
@@ -138,7 +138,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
 
   if (shapeId === "oval") {
     return {
-      score: "Proportions Idéales (9.7/10)",
+      score: "Proportions Idéales",
       badgeClass: "bg-emerald-500/10 text-emerald-700 border-emerald-300 ring-emerald-500/20",
       analysis: "Visage équilibré par excellence : les styles pantos, géométriques et papillon s'ajustent naturellement.",
       recommended: true,
@@ -154,7 +154,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
   // Cœur / Triangle
   if (frameType === "pantos" || frameType === "round" || isRecommended) {
     return {
-      score: "Équilibre Facial Parfait (9.6/10)",
+      score: "Équilibre Facial Idéal",
       badgeClass: "bg-emerald-500/10 text-emerald-700 border-emerald-300 ring-emerald-500/20",
       analysis: "Compense un front plus large et apporte de la douceur au niveau du menton effilé.",
       recommended: true,
@@ -168,7 +168,7 @@ function getDetailedOptometricDiagnosis(shapeId: FaceShapeId, frameType: FrameTr
   }
 
   return {
-    score: "Association Intéressante (7.8/10)",
+    score: "Association Harmonieuse",
     badgeClass: "bg-blue-500/10 text-blue-700 border-blue-300 ring-blue-500/20",
     analysis: "Un style équilibré à valider en atelier avec Audrey lors du centrage pupillaire.",
     recommended: true,
@@ -404,33 +404,31 @@ export function FaceShapeAdvisor() {
     <section
       id="morphologie"
       aria-labelledby="morpho-title"
-      className="relative overflow-hidden bg-ivoire-fonce/40 bg-optical-grid border-y border-nuit/5 py-16 sm:py-20 md:py-28"
+      className="relative overflow-hidden bg-ivoire-fonce/40 bg-optical-grid border-b border-nuit/5 py-10 sm:py-12 lg:py-14"
     >
       <OpticalBackground variant="consultation" tone="light" />
       <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
-                <ScanFace size={14} aria-hidden="true" /> Studio Visagisme &amp; Morphologie
-              </span>
-              <h2
-                id="morpho-title"
-                className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
-              >
-                Quelle monture pour la forme de votre visage ?
-              </h2>
-              <p className="mt-3 text-fluid-lead text-gris-fonce">
-                La monture idéale ne se résume pas à une esthétique : elle équilibre les volumes osseux,
-                respecte la ligne de vos sourcils et garantit un centrage pupillaire parfait sur les 4 différentes morphologies.
-              </p>
-            </div>
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
+              <ScanFace size={14} aria-hidden="true" /> Studio Visagisme &amp; Morphologie
+            </span>
+            <h2
+              id="morpho-title"
+              className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
+            >
+              Quelle monture pour la forme de votre visage ?
+            </h2>
+            <p className="mt-3 text-fluid-lead text-gris-fonce mx-auto max-w-2xl">
+              La monture idéale ne se résume pas à une esthétique : elle équilibre les volumes osseux,
+              respecte la ligne de vos sourcils et garantit un centrage pupillaire parfait sur les 4 différentes morphologies.
+            </p>
 
-            {/* Sélecteur des 4 formes de visage clés */}
+            {/* Sélecteur des 4 formes de visage clés centré */}
             <div
               role="tablist"
               aria-label="Sélectionner la forme de votre visage"
-              className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2.5"
+              className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
             >
               {faceShapes.map((shape) => {
                 const isSelected = selectedShape.id === shape.id;
@@ -467,7 +465,7 @@ export function FaceShapeAdvisor() {
         <div
           key={selectedShape.id}
           role="tabpanel"
-          className="animate-in fade-in mt-6 overflow-hidden rounded-2xl bg-white p-4 shadow-2xs ring-1 ring-nuit/10 sm:p-6 lg:p-7"
+          className="animate-in fade-in mt-8 sm:mt-10 overflow-hidden rounded-3xl bg-white p-5 shadow-sm ring-1 ring-nuit/10 sm:p-7 lg:p-8"
         >
           <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_0.85fr]">
             {/* Colonne Gauche : Diagnostic Visagisme & Recommandations d'Atelier */}
@@ -486,11 +484,11 @@ export function FaceShapeAdvisor() {
                 {selectedShape.description}
               </h3>
 
-              {/* 3 Cartes des Piliers Optométriques (Volumes Osseux, Sourcils, Centrage) */}
+              {/* 3 Cartes des Piliers Optométriques d'Atelier (Volumes, Ligne Sourcilière, Centrage) */}
               <div className="space-y-3">
                 <p className="text-xs font-bold uppercase tracking-wider text-sauge-fonce flex items-center gap-1.5">
                   <Activity size={14} className="text-champagne-fonce" />
-                  Analyse d&apos;Atelier sur les 3 Piliers Optométriques
+                  Règles d&apos;Atelier &bull; Les 3 Piliers de l&apos;Ajustement
                 </p>
 
                 <div className="grid gap-3 sm:grid-cols-3">
@@ -500,17 +498,11 @@ export function FaceShapeAdvisor() {
                       <span className="text-xs font-bold text-nuit flex items-center gap-1.5">
                         <ScanFace size={14} className="text-champagne-fonce" /> Volumes Osseux
                       </span>
-                      <span className="text-[11px] font-mono font-bold text-sauge-fonce">
-                        {metrics.boneBalanceScore}%
+                      <span className="rounded-full bg-champagne/20 px-2 py-0.5 text-[10px] font-bold text-champagne-fonce">
+                        {metrics.recommended ? "Équilibre Idéal" : "Contraste Fort"}
                       </span>
                     </div>
-                    <div className="h-1.5 w-full rounded-full bg-nuit/10 overflow-hidden">
-                      <div
-                        style={{ width: `${metrics.boneBalanceScore}%` }}
-                        className="h-full rounded-full bg-champagne transition-all duration-500"
-                      />
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-gris-fonce">
+                    <p className="text-xs leading-relaxed text-gris-fonce pt-1">
                       {metrics.boneBalanceAnalysis}
                     </p>
                   </div>
@@ -519,19 +511,13 @@ export function FaceShapeAdvisor() {
                   <div className="rounded-2xl border border-nuit/10 bg-ivoire/50 p-4 space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-nuit flex items-center gap-1.5">
-                        <Eye size={14} className="text-emerald-600" /> Ligne Sourcilière
+                        <Eye size={14} className="text-emerald-600" /> Arcade Sourcilière
                       </span>
-                      <span className="text-[11px] font-mono font-bold text-emerald-700">
-                        {metrics.eyebrowScore}%
+                      <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+                        Dégagement 2 mm
                       </span>
                     </div>
-                    <div className="h-1.5 w-full rounded-full bg-nuit/10 overflow-hidden">
-                      <div
-                        style={{ width: `${metrics.eyebrowScore}%` }}
-                        className="h-full rounded-full bg-emerald-500 transition-all duration-500"
-                      />
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-gris-fonce">
+                    <p className="text-xs leading-relaxed text-gris-fonce pt-1">
                       {metrics.eyebrowAnalysis}
                     </p>
                   </div>
@@ -542,17 +528,11 @@ export function FaceShapeAdvisor() {
                       <span className="text-xs font-bold text-nuit flex items-center gap-1.5">
                         <Crosshair size={14} className="text-sauge-fonce" /> Centrage Boxing
                       </span>
-                      <span className="text-[11px] font-mono font-bold text-sauge-fonce">
-                        {metrics.pupilScore}%
+                      <span className="rounded-full bg-sauge-fonce/15 px-2 py-0.5 text-[10px] font-bold text-sauge-fonce">
+                        1/10e mm
                       </span>
                     </div>
-                    <div className="h-1.5 w-full rounded-full bg-nuit/10 overflow-hidden">
-                      <div
-                        style={{ width: `${metrics.pupilScore}%` }}
-                        className="h-full rounded-full bg-sauge-fonce transition-all duration-500"
-                      />
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-gris-fonce">
+                    <p className="text-xs leading-relaxed text-gris-fonce pt-1">
                       {metrics.pupilAnalysis}
                     </p>
                   </div>

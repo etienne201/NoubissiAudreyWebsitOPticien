@@ -3,6 +3,7 @@ import { messages, productSalesNote, responseNote, schedule, site } from "@/conf
 import { formatHour } from "@/lib/hours";
 import { OpenBadge } from "../OpenBadge";
 import { Reveal } from "../Reveal";
+import { TextReveal } from "../TextReveal";
 import { WhatsAppLink } from "../WhatsAppLink";
 
 export function Contact() {
@@ -12,9 +13,10 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20 lg:px-8 md:py-28"
+      className="relative w-full overflow-hidden pt-10 pb-12 sm:pt-12 sm:pb-14 lg:pt-14 lg:pb-16"
     >
-      <div className="grid gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16 items-start">
         <Reveal>
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
@@ -24,7 +26,11 @@ export function Contact() {
               id="contact-title"
               className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
             >
-              Échangez directement avec Audrey Noubissi
+              <TextReveal
+                text="Échangez directement avec Audrey Noubissi"
+                highlightWords={["directement", "Audrey"]}
+                as="span"
+              />
             </h2>
             <p className="mt-3 sm:mt-4 max-w-md text-fluid-lead text-gris-fonce">
               Posez une question sur vos verres, demandez conseil pour une monture ou commandez vos
@@ -152,6 +158,7 @@ export function Contact() {
             </div>
           </div>
         </Reveal>
+      </div>
       </div>
     </section>
   );

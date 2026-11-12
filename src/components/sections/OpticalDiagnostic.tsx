@@ -101,38 +101,38 @@ export function OpticalDiagnostic() {
     <section
       id="diagnostic"
       aria-labelledby="diagnostic-title"
-      className="relative overflow-hidden bg-ivoire-fonce/55 bg-optical-grid border-y border-nuit/5 py-16 sm:py-20 md:py-28"
+      className="relative overflow-hidden bg-ivoire-fonce/55 bg-optical-grid border-b border-nuit/5 py-12 sm:py-14 lg:py-16"
     >
       <OpticalBackground variant="consultation" tone="light" />
       <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
-                <Sparkles size={14} aria-hidden="true" /> Atelier de Conseil Interactif
-              </span>
-              <h2
-                id="diagnostic-title"
-                className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
-              >
-                Découvrons ensemble l&apos;équipement adapté à votre vue
-              </h2>
-              <p className="mt-3 text-fluid-lead text-gris-fonce">
-                En 4 étapes simples inspirées d&apos;un entretien en atelier d&apos;optique, exprimez
-                vos habitudes et vos attentes pour obtenir une préconisation pédagogique sur vos
-                verres et votre monture.
-              </p>
-            </div>
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sauge-pale px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-sauge-fonce ring-1 ring-sauge-fonce/15">
+              <Sparkles size={14} aria-hidden="true" /> Atelier de Conseil Interactif
+            </span>
+            <h2
+              id="diagnostic-title"
+              className="mt-3 font-serif text-fluid-h2 font-medium text-nuit"
+            >
+              Découvrons ensemble l&apos;équipement adapté à votre vue
+            </h2>
+            <p className="mt-3 text-fluid-lead text-gris-fonce mx-auto max-w-2xl">
+              En 4 étapes simples inspirées d&apos;un entretien en atelier d&apos;optique, exprimez
+              vos habitudes et vos attentes pour obtenir une préconisation pédagogique sur vos
+              verres et votre monture.
+            </p>
 
             {showResult && (
-              <button
-                type="button"
-                onClick={handleReset}
-                className="inline-flex items-center gap-2 self-start rounded-full border border-nuit/15 bg-white px-4 py-2.5 text-xs font-semibold text-nuit shadow-2xs transition-colors hover:border-nuit hover:bg-nuit hover:text-ivoire lg:self-auto"
-              >
-                <RotateCcw size={14} aria-hidden="true" />
-                <span>Modifier mes réponses</span>
-              </button>
+              <div className="mt-4 flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="inline-flex items-center gap-2 rounded-full border border-nuit/15 bg-white px-4 py-2.5 text-xs font-semibold text-nuit shadow-2xs transition-colors hover:border-nuit hover:bg-nuit hover:text-ivoire"
+                >
+                  <RotateCcw size={14} aria-hidden="true" />
+                  <span>Modifier mes réponses</span>
+                </button>
+              </div>
             )}
           </div>
         </Reveal>

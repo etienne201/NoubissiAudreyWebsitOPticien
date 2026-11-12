@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { messages, reasons, site } from "@/config/site";
 import { Reveal } from "../Reveal";
+import { TextReveal } from "../TextReveal";
 import { WhatsAppLink } from "../WhatsAppLink";
 
 const reasonIcons = [GraduationCap, HeartHandshake, ScanFace, MessageCircle];
@@ -19,7 +20,7 @@ export function Why() {
   return (
     <section
       aria-labelledby="why-title"
-      className="optical-meniscus-divider relative overflow-hidden bg-nuit py-16 text-ivoire sm:py-20 md:py-28"
+      className="optical-meniscus-divider relative overflow-hidden bg-nuit py-12 sm:py-14 lg:py-16 text-ivoire"
     >
       <div
         aria-hidden="true"
@@ -53,7 +54,11 @@ export function Why() {
                   id="why-title"
                   className="mt-5 sm:mt-6 font-serif text-fluid-h2 font-medium text-ivoire"
                 >
-                  Pourquoi confier votre vue et votre style à Audrey ?
+                  <TextReveal
+                    text="Pourquoi confier votre vue et votre style à Audrey ?"
+                    highlightWords={["vue", "style", "Audrey"]}
+                    as="span"
+                  />
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-ivoire/75 sm:text-base">
                   Chaque équipement optique est le fruit d&apos;une écoute attentive, d&apos;une

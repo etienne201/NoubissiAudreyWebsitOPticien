@@ -51,6 +51,10 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: "Audrey Noubissi, opticienne à Douala", description: site.description },
   robots: { index: true, follow: true },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.png",
+  },
   appleWebApp: { capable: true, title: "Audrey Noubissi", statusBarStyle: "black-translucent" },
   formatDetection: { telephone: false },
 };

@@ -48,73 +48,6 @@ const socialLabels = {
   tiktok: "TikTok",
 } as const;
 
-type QuickIntentId = "prescription" | "frames" | "insurance" | "repair";
-
-type QuickIntent = {
-  id: QuickIntentId;
-  label: string;
-  badge: string;
-  title: string;
-  description: string;
-  whatsappLabel: string;
-  whatsappMsg: string;
-  aiPrompt: string;
-  icon: typeof Glasses;
-};
-
-const QUICK_INTENTS: QuickIntent[] = [
-  {
-    id: "prescription",
-    label: "Ordonnance & Devis",
-    badge: "Prioritaire",
-    title: "Étude de votre ordonnance & devis verres sur mesure",
-    description:
-      "Envoyez la photo de votre prescription ophtalmologique. Audrey décrypte vos corrections (OD/OG, cylindre, addition) et vous conseille l'indice d'amincissement idéal.",
-    whatsappLabel: "Envoyer mon ordonnance sur WhatsApp",
-    whatsappMsg:
-      "Bonjour Audrey, j'ai une ordonnance ophtalmologique et je souhaiterais votre analyse pour le choix de mes verres et d'une monture adaptée.",
-    aiPrompt: "Peux-tu m'aider à comprendre mon ordonnance de lunettes ?",
-    icon: FileText,
-  },
-  {
-    id: "frames",
-    label: "Visagisme & Montures",
-    badge: "Sur-mesure",
-    title: "Sélection morphologique & essayage privé à Douala",
-    description:
-      "Acétate poli main, titane ultra-léger dès 12 g ou solaires polarisées UV400 : trouvez la monture qui sublime vos traits sans glisser sur l'arête nasale.",
-    whatsappLabel: "Être guidé(e) pour ma monture",
-    whatsappMsg: messages.glasses,
-    aiPrompt: "Quelle forme de monture choisir selon la forme de mon visage ?",
-    icon: ScanFace,
-  },
-  {
-    id: "insurance",
-    label: "Tiers-Payant Mutuelle",
-    badge: "Escoma • Zenith • WTW • Olea",
-    title: "Prise en charge mutuelle & facture proforma normalisée",
-    description:
-      "Préparez votre dossier d'assurance sans déplacement inutile. Audrey établit votre devis normalisé conforme aux exigences de votre organisme à Douala.",
-    whatsappLabel: "Demander une facture proforma",
-    whatsappMsg: insuranceMessage,
-    aiPrompt: "Comment fonctionne la prise en charge avec mon assurance à Douala ?",
-    icon: ShieldCheck,
-  },
-  {
-    id: "repair",
-    label: "Ajustage & Atelier",
-    badge: "Service Atelier",
-    title: "Réglage millimétrique, remise en état & centrage",
-    description:
-      "Lunettes qui glissent avec la chaleur, branches déséquilibrées, plaquettes à remplacer ou nettoyage complet : confiez votre équipement à l'atelier.",
-    whatsappLabel: "Planifier un ajustage en atelier",
-    whatsappMsg:
-      "Bonjour Audrey, j'aurais besoin d'un ajustement ou d'un entretien en atelier pour mes lunettes à Douala. Quand puis-je passer ?",
-    aiPrompt: "Proposez-vous le réglage ou la réparation de lunettes qui glissent ?",
-    icon: Wrench,
-  },
-];
-
 const DOUALA_DISTRICTS = [
   "Akwa",
   "Bonanjo",
@@ -131,17 +64,11 @@ export function Footer() {
     Object.keys(site.socials) as (keyof typeof site.socials)[]
   ).filter((k) => site.socials[k]);
 
-  const [selectedIntentId, setSelectedIntentId] =
-    useState<QuickIntentId>("prescription");
   const [openStatus, setOpenStatus] = useState<OpenStatus | null>(null);
   const [doualaTime, setDoualaTime] = useState<string>("");
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [sharedFeedback, setSharedFeedback] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>("tools");
-
-  const activeIntent =
-    QUICK_INTENTS.find((item) => item.id === selectedIntentId) ??
-    QUICK_INTENTS[0];
 
   // Horloge temps réel sur le fuseau Africa/Douala + statut d'ouverture
   useEffect(() => {
@@ -207,7 +134,7 @@ export function Footer() {
   return (
     <footer
       aria-label="Pied de page et conciergerie optique"
-      className="relative overflow-hidden bg-gradient-to-b from-nuit via-[#0B1528] to-[#070D18] pt-14 text-ivoire sm:pt-20 lg:pt-24 pb-[calc(env(safe-area-inset-bottom)+7.5rem)] lg:pb-16"
+      className="relative overflow-hidden bg-gradient-to-b from-nuit via-[#0B1528] to-[#070D18] pt-12 text-ivoire sm:pt-14 lg:pt-16 pb-[calc(env(safe-area-inset-bottom)+7.5rem)] lg:pb-16"
     >
       {/* Liseré supérieur haute précision avec halo or champagne */}
       <div
@@ -235,107 +162,54 @@ export function Footer() {
 
       <div className="relative z-10 mx-auto max-w-page px-4 sm:px-6 lg:px-8">
         {/* ================================================================= */}
-        {/* 1. CONCIERGERIE OPTIQUE INTELLIGENTE (BENTO INTERACTIF LUXE)      */}
+        {/* 1. BANDEAU MAJEUR LUXE : CONCIERGERIE & ÉCHANGE PRIVILÉGIÉ         */}
         {/* ================================================================= */}
         <section
           aria-labelledby="conciergerie-heading"
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-nuit-doux/90 via-nuit/95 to-[#0A1424]/90 p-5 shadow-[0_24px_64px_rgba(3,7,18,0.7)] ring-1 ring-champagne/20 backdrop-blur-2xl sm:p-7 lg:p-9"
+          className="relative overflow-hidden rounded-3xl border border-champagne/30 bg-gradient-to-br from-nuit-doux/95 via-nuit/98 to-[#070D18]/95 p-6 shadow-[0_24px_64px_rgba(3,7,18,0.7)] ring-1 ring-white/10 backdrop-blur-2xl sm:p-8 lg:p-10"
         >
           {/* Lueur d'accent interne */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-champagne/15 blur-3xl"
+            className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-champagne/15 blur-3xl"
           />
 
-          <div className="relative flex flex-col justify-between gap-5 border-b border-white/10 pb-5 lg:flex-row lg:items-center">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-champagne/35 bg-champagne/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-champagne">
+          <div className="relative grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-champagne/35 bg-champagne/10 px-3.5 py-1 text-[11px] font-bold uppercase tracking-widest text-champagne">
                 <Sparkles size={13} className="shrink-0" aria-hidden="true" />
-                <span>Conciergerie Optique Privée</span>
+                <span>Atelier d&apos;Optique Privé &bull; Douala</span>
               </div>
               <h2
                 id="conciergerie-heading"
-                className="mt-2.5 font-serif text-2xl font-medium tracking-tight text-ivoire sm:text-3xl"
+                className="mt-3.5 font-serif text-2xl font-medium tracking-tight text-ivoire sm:text-3xl lg:text-4xl leading-tight"
               >
-                Quel est votre besoin visuel aujourd&apos;hui ?
+                Une vision d&apos;exception commence par un conseil sur mesure.
               </h2>
-            </div>
-
-            {/* Sélecteur d'intentions interactif avec défilement fluide et pillules ergonomiques */}
-            <div className="relative -mx-1 sm:mx-0">
-              <div
-                role="tablist"
-                aria-label="Choisir votre besoin optique"
-                className="no-scrollbar flex items-center gap-2 overflow-x-auto px-1 py-1.5 snap-x snap-mandatory"
-              >
-                {QUICK_INTENTS.map((intent) => {
-                  const Icon = intent.icon;
-                  const isSelected = intent.id === selectedIntentId;
-                  return (
-                    <button
-                      key={intent.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={isSelected}
-                      onClick={() => setSelectedIntentId(intent.id)}
-                      className={`inline-flex shrink-0 snap-start items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold transition-all duration-300 ${
-                        isSelected
-                          ? "bg-gradient-to-r from-champagne via-[#d8bb84] to-champagne text-nuit shadow-lg shadow-champagne/25 ring-2 ring-champagne/50"
-                          : "border border-white/15 bg-white/[0.04] text-ivoire/85 hover:border-champagne/40 hover:bg-white/10 hover:text-ivoire"
-                      }`}
-                    >
-                      <Icon size={14} className="shrink-0" aria-hidden="true" />
-                      <span>{intent.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Panneau dynamique selon l'intention sélectionnée */}
-          <div
-            key={selectedIntentId}
-            role="tabpanel"
-            className="relative mt-6 grid gap-6 lg:grid-cols-[1.45fr_1fr] lg:items-center"
-          >
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-sauge/20 px-2.5 py-0.5 text-[11px] font-semibold text-sauge-pale ring-1 ring-sauge/30">
-                  {activeIntent.badge}
-                </span>
-                <span className="text-xs text-ivoire/75">
-                  Réponse personnalisée d&apos;Audrey Noubissi • Douala
-                </span>
-              </div>
-              <h3 className="mt-2.5 font-serif text-xl font-medium text-ivoire sm:text-2xl">
-                {activeIntent.title}
-              </h3>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ivoire/80 sm:text-base">
-                {activeIntent.description}
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-ivoire/80 sm:text-base">
+                Renouvellement d&apos;ordonnance, montures ajustées à votre morphologie ou prise en charge mutuelle (Escoma, Zenith, WTW, Olea) : Audrey Noubissi vous accompagne personnellement à chaque étape.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:justify-end">
+            <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3.5 lg:justify-end">
               <a
-                href={whatsappLink(activeIntent.whatsappMsg)}
+                href={whatsappLink(messages.general)}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-champagne via-[#d4b57e] to-champagne px-6 py-3 text-sm font-bold text-nuit shadow-lg shadow-champagne/20 transition-all duration-300 hover:brightness-105 hover:shadow-champagne/35 active:scale-[0.98]"
+                className="group inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-champagne via-[#ebd5a7] to-champagne px-7 py-3.5 text-sm font-bold text-nuit shadow-lg shadow-champagne/25 transition-all duration-300 hover:brightness-105 hover:shadow-champagne/35 active:scale-[0.99]"
               >
                 <MessageCircle size={18} aria-hidden="true" className="shrink-0 transition-transform group-hover:scale-110" />
-                <span className="tracking-tight">{activeIntent.whatsappLabel}</span>
-                <ArrowRight size={16} aria-hidden="true" className="shrink-0 transition-transform group-hover:translate-x-0.5" />
+                <span>Échanger sur WhatsApp</span>
+                <ArrowRight size={15} aria-hidden="true" className="shrink-0 transition-transform group-hover:translate-x-0.5" />
               </a>
 
-              <button
-                type="button"
-                onClick={() => openOpticalAssistant(activeIntent.aiPrompt)}
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/[0.04] px-5 py-3 text-xs font-semibold text-ivoire transition-all duration-300 hover:border-champagne/50 hover:bg-white/[0.08] hover:text-champagne active:scale-[0.98]"
+              <Link
+                href="/#rendez-vous"
+                className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.05] px-6 py-3.5 text-xs sm:text-sm font-semibold text-ivoire transition-all duration-300 hover:border-champagne hover:bg-champagne/15 hover:text-champagne active:scale-[0.99]"
               >
-                <Sparkles size={16} className="shrink-0 text-champagne" aria-hidden="true" />
-                <span>Poser une question à l&apos;IA</span>
-              </button>
+                <Calendar size={16} className="shrink-0 text-champagne" aria-hidden="true" />
+                <span>Planifier un Rendez-vous</span>
+              </Link>
             </div>
           </div>
         </section>

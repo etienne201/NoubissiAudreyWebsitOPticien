@@ -6,9 +6,9 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
   return (
     <div className="min-h-screen bg-ivoire text-nuit">
       {/* Bandeau d'en-tête Bleu Nuit assurant un contraste parfait avec le Header fixe */}
-      <section className="optical-meniscus-divider relative overflow-hidden bg-nuit bg-optical-grid-dark pt-28 pb-14 text-ivoire md:pt-36 md:pb-18">
+      <section className="optical-meniscus-divider relative overflow-hidden bg-nuit bg-optical-grid-dark pt-24 pb-14 text-ivoire sm:pt-28 lg:pt-36 lg:pb-18">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-nuit-doux/50 via-nuit to-nuit pointer-events-none" />
-        <div className="relative mx-auto max-w-3xl px-5 md:px-8">
+        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-champagne transition-colors hover:text-ivoire"
@@ -20,12 +20,12 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
             <ShieldCheck size={14} className="text-champagne" aria-hidden="true" />
             <span>Transparence & Déontologie Optique</span>
           </div>
-          <h1 className="mt-2 font-serif text-3xl font-medium md:text-5xl">{title}</h1>
+          <h1 className="mt-2 font-serif text-3xl font-medium sm:text-4xl lg:text-5xl">{title}</h1>
         </div>
       </section>
 
-      <article className="mx-auto max-w-3xl px-5 py-12 md:px-8 md:py-16">
-        <div className="rounded-3xl border border-nuit/10 bg-white p-7 shadow-sm sm:p-10 space-y-5 leading-relaxed text-gris-fonce [&_h2]:mt-8 [&_h2:first-child]:mt-0 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-nuit">
+      <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        <div className="rounded-3xl border border-nuit/10 bg-white p-6 shadow-sm sm:p-8 lg:p-10 space-y-6 leading-relaxed text-gris-fonce [&_h2]:mt-8 [&_h2:first-child]:mt-0 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-nuit">
           {children}
         </div>
       </article>
